@@ -1,0 +1,97 @@
+{
+	"name": "portafolio-ai-workspace",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "workspace",
+	"workspaceFolder": "/workspace",
+	"forwardPorts": [3000,8000,5432],
+	"postCreateCommand": "bash .devcontainer/scripts/setup.sh",
+"mounts": ["source=${env:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind" ],
+	"remoteUser": "vscode",
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// Python
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.black-formatter",
+				"charliermarsh.ruff",
+
+				// JavaScript / TypeScript
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+
+				// FastAPI / OpenAPI
+				"42crunch.vscode-openapi",
+				"humao.rest-client",
+
+				// Git & DevOps
+				"eamodio.gitlens",
+				"github.vscode-github-actions",
+				"ms-azuretools.vscode-docker",
+
+				// Utilities
+				"streetsidesoftware.code-spell-checker",
+				"mikestead.dotenv",
+				"yzhang.markdown-all-in-one",
+
+				// Developer Experience
+				"EditorConfig.EditorConfig",
+				"johnpapa.vscode-peacock"
+			],
+
+			"settings": {
+				// Python
+				"python.defaultInterpreterPath": "/workspace/apps/api/.venv/bin/python",
+				"python.formatting.provider": "none",
+				"[python]": {
+					"editor.defaultFormatter": "ms-python.black-formatter",
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.organizeImports": "explicit"
+					}
+				},
+				"ruff.enable": true,
+				"ruff.lint.run": "onSave",
+
+				// TypeScript / JS
+				"[typescript]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				"[typescriptreact]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+
+				// Theme & UI
+				"workbench.colorCustomizations": {
+					"titleBar.activeBackground": "#0070F3",
+					"titleBar.activeForeground": "#FFFFFF",
+					"activityBar.background": "#0070F3",
+					"activityBar.foreground": "#FFFFFF",
+					"statusBar.background": "#0070F3",
+					"statusBar.foreground": "#FFFFFF"
+				},
+
+				// Editor general
+				"editor.tabSize": 2,
+				"editor.rulers": [88, 120],
+				"editor.bracketPairColorization.enabled": true,
+				"files.exclude": {
+					"**/__pycache__": true,
+					"**/.pytest_cache": true,
+					"**/node_modules": true,
+					"**/.next": true,
+					"**/*.pyc": true
+				},
+
+				// Terminal
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+
+		}
+
+	}
+}

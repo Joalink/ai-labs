@@ -1,0 +1,17 @@
+cat <<EOF > .gitignore
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+.next/
+
+# Env
+.env
+.env.*
+
+# Devcontainer cache
+.vscode/
+EOF
