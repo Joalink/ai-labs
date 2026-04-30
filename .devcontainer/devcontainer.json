@@ -4,8 +4,14 @@
 	"service": "workspace",
 	"workspaceFolder": "/workspace",
 	"forwardPorts": [3000,8000,5432],
+	"portsAttributes": {
+		"3000": {
+			"label": "Next.js Dev",
+			"onAutoForward": "notify"
+		}
+	},
 	"postCreateCommand": "bash .devcontainer/scripts/setup.sh",
-"mounts": ["source=${env:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind" ],
+	"mounts": ["source=${env:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind" ],
 	"remoteUser": "vscode",
 
 	"customizations": {
