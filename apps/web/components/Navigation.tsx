@@ -35,8 +35,12 @@ export default function Navigation() {
 
               <Link href="/" className="flex ms-2">
                 <HeadCircuitIcon size={24} weight="fill" />
-                <span className="self-center text-lg font-semibold whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-800 ms-2">
-                  JoaLink AI Portfolio
+                <span
+                  className={`self-center text-lg font-semibold whitespace-nowrap ms-2 rounded-sm ${
+                    isDark ? "hover:bg-gray-800" : "hover:bg-gray-100"
+                  }`}
+                >
+                  JoaLink AI/ML Portfolio
                 </span>
               </Link>
             </div>
@@ -62,8 +66,8 @@ export default function Navigation() {
       </nav>
 
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-full pt-14 transition-transform border-e border-default bg-neutral-primary-soft 
-    ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        className={`fixed top-0 left-0 z-40 w-64 h-full pt-14 transition-transform border-e border-default bg-neutral-primary-soft
+    ${isOpen ? "translate-x-0" : "-translate-x-full"}
     lg:translate-x-0`}
       >
         <div className="h-full px-3 py-4 overflow-y-auto">
