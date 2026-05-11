@@ -10,16 +10,14 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
     && corepack enable \
     && corepack prepare pnpm@latest --activate \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir \
-    uv \
-    uvicorn \
-    fastapi
+RUN pip install --no-cache-dir uv
+
 
 RUN useradd -ms /bin/bash vscode
 USER vscode
