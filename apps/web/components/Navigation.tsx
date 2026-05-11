@@ -1,46 +1,74 @@
 "use client";
-
 import Link from "next/link";
 import {
   HeadCircuitIcon,
   GithubLogoIcon,
-  FolderIcon,
-  VideoConferenceIcon,
-  CircuitryIcon,
+  ChatIcon,
+  FilesIcon,
+  MicrophoneIcon,
   SunDimIcon,
   MoonIcon,
   ListIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navigation() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const isDark = resolvedTheme === "dark";
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const navLinks = [
+    {
+      href: "/ai-tools/chat-assistant",
+      label: "Chat Assistant",
+      icon: <ChatIcon size={24} />,
+    },
+    {
+      href: "/ai-tools/docs-assistant",
+      label: "Docs Assistant",
+      icon: <FilesIcon size={24} />,
+    },
+    {
+      href: "/ai-tools/meeting-analysis",
+      label: "Meeting Analysis",
+      icon: <MicrophoneIcon size={24} />,
+    },
+  ];
+
   return (
     <>
-      <nav className="fixed top-0 z-50 w-full h-14 bg-background border-b border-default">
-        <div className="px-3 py-3 lg:px-5 ">
+      {/* Backdrop — mobile only */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Top navbar */}
+      <nav className="fixed top-0 z-50 w-full h-14 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+        <div className="px-3 py-3 lg:px-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 lg:hidden hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
+                aria-label="Toggle menu"
               >
                 {isOpen ? <XIcon size={24} /> : <ListIcon size={24} />}
               </button>
-
-              <Link href="/" className="flex ms-2">
+              <Link href="/" className="flex items-center gap-2 ms-2">
                 <HeadCircuitIcon size={24} weight="fill" />
-                <span
-                  className={`self-center text-lg font-semibold whitespace-nowrap ms-2 rounded-sm ${
-                    isDark ? "hover:bg-gray-800" : "hover:bg-gray-100"
-                  }`}
-                >
-                  JoaLink AI/ML Portfolio
+                <span className="text-lg font-semibold whitespace-nowrap text-gray-900 dark:text-white">
+                  JoaLink Labs
                 </span>
               </Link>
             </div>
@@ -48,16 +76,22 @@ export default function Navigation() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white rounded-full transition-colors"
+                className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+                aria-label="Toggle theme"
               >
-                {isDark ? (
+                {!mounted ? (
+                  <SunDimIcon size={24} weight="fill" className="opacity-0" />
+                ) : isDark ? (
                   <SunDimIcon size={24} weight="fill" />
                 ) : (
                   <MoonIcon size={24} weight="fill" />
                 )}
               </button>
-
-              <Link href="https://github.com/JoaLink" target="_blank">
+              <Link
+                href="https://github.com/JoaLink"
+                target="_blank"
+                aria-label="GitHub"
+              >
                 <GithubLogoIcon size={24} weight="fill" />
               </Link>
             </div>
@@ -65,45 +99,28 @@ export default function Navigation() {
         </div>
       </nav>
 
+      {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-full pt-14 transition-transform border-e border-default bg-neutral-primary-soft
-    ${isOpen ? "translate-x-0" : "-translate-x-full"}
-    lg:translate-x-0`}
+        className={`fixed top-0 left-0 z-40 w-64 h-full pt-14 border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 transition-transform
+          ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       >
         <div className="h-full px-3 py-4 overflow-y-auto">
           <ul className="space-y-2 font-medium">
-            <li>
-              <Link
-                href="/ai-tools/docs-assistant"
-                className="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <FolderIcon size={32} />
-                <span className="ms-3">Docs Assistant</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/ai-tools/meeting-intelligence"
-                className="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <VideoConferenceIcon size={32} />
-                <span className="flex-1 ms-3">Meeting Intelligence</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/ai-tools/equipment-anomaly"
-                className="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <CircuitryIcon size={32} />
-                <span className="flex-1 ms-3">Equipment Anomaly</span>
-              </Link>
-            </li>
+            {navLinks.map(({ href, label, icon }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center px-2 py-1.5 text-gray-900 dark:text-gray-100 rounded hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  {icon}
+                  <span className="ms-3">{label}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </aside>
-
-      <div className="lg:ml-64 mt-14"></div>
     </>
   );
 }
