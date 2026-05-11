@@ -3,6 +3,8 @@ cat <<EOF > .gitignore
 .venv/
 __pycache__/
 *.pyc
+data/
+.python-version
 
 # Node
 .next/
