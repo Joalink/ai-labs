@@ -52,14 +52,13 @@
 				"python.defaultInterpreterPath": "/workspace/apps/api/.venv/bin/python",
 				"python.formatting.provider": "none",
 				"[python]": {
-					"editor.defaultFormatter": "ms-python.black-formatter",
+					"editor.defaultFormatter": "charliermarsh.ruff",
 					"editor.formatOnSave": true,
 					"editor.codeActionsOnSave": {
-						"source.organizeImports": "explicit"
+						"source.fixAll.ruff": "explicit",
+						"source.organizeImports.ruff": "explicit"
 					}
 				},
-				"ruff.enable": true,
-				"ruff.lint.run": "onSave",
 
 				// TypeScript / JS
 				"[typescript]": {
