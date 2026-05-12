@@ -1,4 +1,9 @@
 import { RefObject } from "react";
+import {
+  XIcon,
+  PaperPlaneRightIcon,
+  PaperclipIcon,
+} from "@phosphor-icons/react";
 
 type Props = {
   input: string;
@@ -9,6 +14,7 @@ type Props = {
   isLoading: boolean;
   onSend: () => void;
   clearFile: () => void;
+  onFileChange: (file: File) => Promise<void>;
 };
 
 export default function ChatInput({
@@ -19,6 +25,7 @@ export default function ChatInput({
   isLoading,
   onSend,
   clearFile,
+  onFileChange,
 }: Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,13 +37,11 @@ export default function ChatInput({
       {file && (
         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-2 rounded w-fit">
           <span>📎 {file.name}</span>
-          <button
+          <XIcon
             onClick={clearFile}
             className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-bold ml-2"
             aria-label="Remove file"
-          >
-            ×
-          </button>
+          />
         </div>
       )}
 
@@ -47,9 +52,7 @@ export default function ChatInput({
           id="file-upload"
           className="hidden"
           onChange={(e) => {
-            if (e.target.files?.[0]) {
-              // setFile called from parent via hook
-            }
+            if (e.target.files?.[0]) onFileChange(e.target.files[0]);
           }}
           accept=".pdf,.doc,.docx,.txt,.csv"
         />
@@ -58,7 +61,7 @@ export default function ChatInput({
           className="cursor-pointer flex items-center justify-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 w-12 h-12 rounded-lg transition-colors"
           title="Upload Document"
         >
-          📎
+          <PaperclipIcon size={24} />
         </label>
 
         <input
@@ -74,7 +77,7 @@ export default function ChatInput({
           disabled={isLoading || (!input.trim() && !file)}
           className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 h-12 rounded-lg font-medium transition-colors"
         >
-          Send
+          <PaperPlaneRightIcon size={24} />
         </button>
       </form>
     </div>
