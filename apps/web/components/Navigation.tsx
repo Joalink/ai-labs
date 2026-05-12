@@ -45,7 +45,6 @@ export default function Navigation() {
 
   return (
     <>
-      {/* Backdrop — mobile only */}
       {isOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/40 lg:hidden"
@@ -53,7 +52,6 @@ export default function Navigation() {
         />
       )}
 
-      {/* Top navbar */}
       <nav className="fixed top-0 z-50 w-full h-14 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
         <div className="px-3 py-3 lg:px-5">
           <div className="flex items-center justify-between">
@@ -99,7 +97,6 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 z-40 w-64 h-full pt-14 border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 transition-transform
           ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
