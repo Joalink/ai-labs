@@ -1,7 +1,7 @@
 import shutil
 
 from app.services.docs_assistant.ingestion import ingest_pdf
-from fastapi import APIRouter, UploadFile
+from fastapi import APIRouter, HTTPException, UploadFile
 
 router = APIRouter()
 
@@ -17,7 +17,7 @@ async def documents(file: UploadFile):
 
         ingest_pdf(path)
 
-        return {"message": "File uploaded"}
+        return {"message": "File uploaded", "namespace": path}
     except Exception as e:
         print(e)
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
