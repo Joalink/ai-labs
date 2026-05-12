@@ -34,7 +34,6 @@ def ingest_pdf(file_path: str):
 
     for i in range(0, len(vectors), BATCH_SIZE):
         batch = vectors[i : i + BATCH_SIZE]
-
-        index.upsert(vectors=batch)
+        index.upsert(vectors=batch, namespace=file_path)
 
     return {"chunks": len(chunks)}

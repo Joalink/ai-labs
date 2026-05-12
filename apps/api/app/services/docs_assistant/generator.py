@@ -3,8 +3,8 @@ from app.core.shared.llm import client
 from app.services.docs_assistant.retriever import retrieve
 
 
-def generate_response(query: str):
-    contexts = retrieve(query)
+def generate_response(query: str, namespace: str):
+    contexts = retrieve(query, namespace)
     context_text = "\n\n".join(contexts)
     prompt = f"""
     Answer the question using the context below.
