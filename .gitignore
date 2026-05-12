@@ -8,6 +8,7 @@ data/
 
 # Node
 .next/
+node_modules/
 .pnpm-store/
 
 # Env
