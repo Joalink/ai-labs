@@ -7,5 +7,10 @@ export type Message = {
 };
 
 export type ApiResponse = {
-  reply: string;
+  answer: string;
+};
+
+export type UploadResponse = {
+  answer: string;
+  namespace: string;
 };

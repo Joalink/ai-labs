@@ -1,20 +1,29 @@
-export async function sendDocMessage(
-  message: string,
-  file: File | null,
-): Promise<string> {
+import { ApiResponse, UploadResponse } from "@/types/chat";
+
+const BASE_URL = "/api";
+
+async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const res = await fetch(`${BASE_URL}/${endpoint}`, options);
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({ message: "Request failed" }));
+    throw new Error(error.message ?? "Request failed");
+  }
+  return res.json();
+}
+
+export function uploadDocument(file: File): Promise<UploadResponse> {
   const formData = new FormData();
+  formData.append("file", file);
+  return request("docs-assistant/upload", { method: "POST", body: formData });
+}
 
-  formData.append("message", message);
-
-  if (file) formData.append("file", file);
-
-  const res = await fetch("/api/v1/docs-assistant", {
+export function sendChatMessage(
+  message: string,
+  namespace: string,
+): Promise<ApiResponse> {
+  return request("docs-assistant/chat", {
     method: "POST",
-    body: formData,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, namespace }),
   });
-
-  if (!res.ok) throw new Error("Request failed");
-
-  const data = await res.json();
-  return data.reply;
 }

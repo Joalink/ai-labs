@@ -15,6 +15,7 @@ export default function DocsAssistantPage() {
     isLoading,
     sendMessage,
     clearFile,
+    handleFileChange,
   } = useDocsChat();
 
   return (
@@ -29,6 +30,7 @@ export default function DocsAssistantPage() {
         isLoading={isLoading}
         onSend={sendMessage}
         clearFile={clearFile}
+        onFileChange={handleFileChange}
       />
     </div>
   );
