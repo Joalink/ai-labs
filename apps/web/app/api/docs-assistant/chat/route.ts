@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await res.json();
-    console.log("be response", data);
     return NextResponse.json(data);
   } catch (err) {
     console.error("chat route error:", err);

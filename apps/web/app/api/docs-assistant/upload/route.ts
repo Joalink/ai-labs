@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await res.json();
-    console.log("Upload response:", data);
     return NextResponse.json(data);
   } catch (err) {
     console.error("upload route error:", err);
