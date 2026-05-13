@@ -10,8 +10,6 @@ router = APIRouter()
 async def chat(request: Request, query: str):
     client_ip = request.client.host
     namespace = f"ip-{client_ip.replace('.', '-').replace(':', '-')}"
-    print(query)
-    print(namespace)
     answer = generate_response(query, namespace)
 
     return {"answer": answer}
