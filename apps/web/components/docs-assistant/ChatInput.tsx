@@ -1,4 +1,3 @@
-import { RefObject } from "react";
 import {
   XIcon,
   PaperPlaneRightIcon,
@@ -10,7 +9,7 @@ type Props = {
   setInput: (val: string) => void;
   file: File | null;
   setFile: (file: File | null) => void;
-  fileInputRef: RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   isLoading: boolean;
   onSend: () => void;
   clearFile: () => void;
