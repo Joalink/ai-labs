@@ -96,6 +96,7 @@ export function useDocsChat() {
     input,
     setInput,
     file,
+    setFile,
     fileInputRef,
     isLoading,
     namespace,
