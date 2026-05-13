@@ -17,13 +17,10 @@ export function uploadDocument(file: File): Promise<UploadResponse> {
   return request("docs-assistant/upload", { method: "POST", body: formData });
 }
 
-export function sendChatMessage(
-  message: string,
-  namespace: string,
-): Promise<ApiResponse> {
+export function sendChatMessage(message: string): Promise<ApiResponse> {
   return request("docs-assistant/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message, namespace }),
+    body: JSON.stringify({ message }),
   });
 }

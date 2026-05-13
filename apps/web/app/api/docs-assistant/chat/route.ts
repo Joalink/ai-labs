@@ -2,12 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, namespace } = await req.json();
+    const { message } = await req.json();
 
-    // query param, NOT json body
     const url = new URL(`${process.env.BACKEND_URL}/api/v1/chat`);
     url.searchParams.set("query", message);
-    url.searchParams.set("namespace", namespace);
 
     const res = await fetch(url.toString(), {
       method: "POST",

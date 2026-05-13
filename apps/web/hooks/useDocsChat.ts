@@ -72,7 +72,7 @@ export function useDocsChat() {
     setIsLoading(true);
 
     try {
-      const data = await sendChatMessage(input, namespace);
+      const data = await sendChatMessage(input);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", text: data.answer, fileName: null },
