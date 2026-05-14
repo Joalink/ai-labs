@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Message } from "@/types/chat";
 import { uploadDocument, sendChatMessage } from "@/lib/api";
 
@@ -9,8 +9,23 @@ export function useDocsChat() {
   const [input, setInput] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [namespace, setNamespace] = useState<string | null>(null); // ← track active doc
+  const [namespace, setNamespace] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const clearSession = async () => {
+    try {
+      await fetch("/api/docs-assistant/session", { method: "DELETE" });
+    } catch (err) {
+      console.error("Session cleanup failed.", err);
+    }
+  };
+
+  useEffect(() => {
+    clearSession();
+    return () => {
+      clearSession();
+    };
+  }, []);
 
   const clearFile = () => {
     setFile(null);
@@ -33,7 +48,7 @@ export function useDocsChat() {
         ...prev,
         {
           role: "assistant",
-          text: `✅ "${selectedFile.name}" uploaded. You can now ask questions.`,
+          text: `✅ ${selectedFile.name}' uploaded. You can now ask questions.`,
           fileName: null,
         },
       ]);
@@ -53,7 +68,6 @@ export function useDocsChat() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
     if (!namespace) {
       setMessages((prev) => [
         ...prev,
