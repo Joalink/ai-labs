@@ -15,7 +15,6 @@ Upload any document and chat with it using a RAG (Retrieval-Augmented Generation
 - Vector embeddings stored in Pinecone
 - Per-user document isolation via IP namespacing
 - Reload namespace session everytime is used
-- Powered by OpenAI
 
 ### 💬 Chat Assistant (coming soon)
 Conversational AI chatbot with context-aware responses.
