@@ -27,19 +27,9 @@ export default function Navigation() {
 
   const navLinks = [
     {
-      href: "/ai-tools/chat-assistant",
-      label: "Chat Assistant",
-      icon: <ChatIcon size={24} />,
-    },
-    {
       href: "/ai-tools/docs-assistant",
       label: "Docs Assistant",
       icon: <FilesIcon size={24} />,
-    },
-    {
-      href: "/ai-tools/meeting-analysis",
-      label: "Meeting Analysis",
-      icon: <MicrophoneIcon size={24} />,
     },
   ];
 
