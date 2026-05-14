@@ -1,4 +1,4 @@
-# JoaLink Labs
+# JoaLink - AI Labs
 
 > A portfolio of AI-powered applications built to demonstrate real-world engineering with modern AI APIs and full-stack development.
 
@@ -114,8 +114,6 @@ pnpm dev
 PINECONE_API_KEY=
 PINECONE_INDEX=
 LLM_MODEL=
-MAX_TOKENS=
-TOP_K=
 ```
 ### apps/web/.env.local
 ```bash
