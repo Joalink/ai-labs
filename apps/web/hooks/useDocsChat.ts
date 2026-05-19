@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Message } from "@/types/chat";
 import { uploadDocument, sendChatMessage } from "@/lib/api";
 
@@ -12,13 +12,17 @@ export function useDocsChat() {
   const [namespace, setNamespace] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const clearSession = async () => {
+  const clearSession = useCallback(async () => {
     try {
-      await fetch("/api/docs-assistant/session", { method: "DELETE" });
+      await fetch("/api/docs-assistant/session", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ namespace }),
+      });
     } catch (err) {
       console.error("Session cleanup failed.", err);
     }
-  };
+  }, [namespace]);
 
   useEffect(() => {
     clearSession();
