@@ -9,7 +9,7 @@ from slowapi.errors import RateLimitExceeded
 app = FastAPI(
     title="JoaLink Labs",
     description="API for the JoaLink Labs application",
-    version="1.1.0",
+    version="1.2.0",
     docs_url="/docs",
 )
 
