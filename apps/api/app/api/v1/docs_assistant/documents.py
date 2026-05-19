@@ -2,6 +2,7 @@ import os
 import shutil
 
 from app.core.shared.limiter import limiter
+from app.core.utils import get_client_ip, make_namespace
 from app.services.docs_assistant.ingestion import ingest_pdf
 from fastapi import APIRouter, HTTPException, Request, UploadFile
 
@@ -13,8 +14,8 @@ router = APIRouter()
 async def documents(request: Request, file: UploadFile):
 
     try:
-        client_ip = request.client.host
-        namespace = f"ip-{client_ip.replace('.', '-').replace(':', '-')}"
+        client_ip = get_client_ip(request)
+        namespace = make_namespace(client_ip)
 
         path = f"{file.filename}"
         with open(path, "wb") as buffer:
