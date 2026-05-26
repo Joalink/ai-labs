@@ -10,7 +10,7 @@ def retrieve(query: str, namespace: str):
         vector=vector, top_k=settings.TOP_K, include_metadata=True, namespace=namespace
     )
     return {
-        "contexts": [match["metadata"]["text"] for match in results["matches"]],
+        "contexts": [m["metadata"]["text"] for m in results["matches"]],
         "filename": (
             results["matches"][0]["metadata"].get("filename")
             if results["matches"]
