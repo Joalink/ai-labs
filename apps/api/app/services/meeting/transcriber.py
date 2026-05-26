@@ -1,5 +1,3 @@
-# from app.core.shared.lsm import client_speech
-
 import assemblyai as speech_model
 from app.core.config import settings
 
@@ -9,10 +7,7 @@ speech_model.settings.api_key = settings.ASSEMBLYAI_API_KEY
 def transcribe(file_path: str) -> dict:
 
     config = speech_model.TranscriptionConfig(
-        speaker_labels=True,  # diarization
-        auto_chapters=True,  # automatic chapter detection
-        sentiment_analysis=True,
-        auto_highlights=True,  # key phrases
+        speaker_labels=True,
         language_detection=True,
     )
 
@@ -26,23 +21,12 @@ def transcribe(file_path: str) -> dict:
         "text": transcript.text,
         "speakers": [
             {
-                "speaker": utterances.speaker,
-                "text": utterances.text,
-                "start": utterances.start,
-                "end": utterances.end,
+                "speaker": u.speaker,
+                "text": u.text,
+                "start": u.start,
+                "end": u.end,
             }
-            for utterances in transcript.utterances or []
+            for u in transcript.utterances or []
         ],
-        "chapters": [
-            {
-                "title": chapter.headline,
-                "summary": chapter.summary,
-                "start": chapter.start,
-                "end": chapter.end,
-            }
-            for chapter in transcript.chapters or []
-        ],
-        "highlights": [h.text for h in transcript.auto_highlights.results or []],
-        "sentiment": transcript.sentiment_analysis,
         "language": transcript.language_code,
     }

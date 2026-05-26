@@ -7,7 +7,6 @@ from app.core.shared.llm import client
 def extract_insights(transcript_text: str) -> dict:
     prompt = f"""
     Analyze this meeting transcript and extract structured information.
-
     Return only valid JSON with these exact keys:
     {{
         "summary": "3-5 sentence summary",
@@ -18,16 +17,15 @@ def extract_insights(transcript_text: str) -> dict:
         "topics": ["topic 1", "topic 2"],
         "sentiment": "positive | neutral | negative"
     }}
-
-    Transcript:
+        Transcript:
     {transcript_text}
     """
 
     response = client.chat.completions.create(
         model=settings.LLM_MODEL,
-        max_tokens=1000,
-        response_format={{"type": "json_object"}},
-        messages=[{{"role": "user", "content": prompt}}],
+        max_tokens=settings.MAX_TOKENS,
+        response_format={"type": "json_object"},
+        messages=[{"role": "user", "content": prompt}],
     )
 
     return json.loads(response.choices[0].message.content)
