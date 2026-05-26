@@ -13,20 +13,20 @@ def ingest_pdf(file_path: str, namespace: str):
 
     text = ""
 
-    for page in reader:
-        text += page.get_text()
+    for p in reader:
+        text += p.get_text()
 
     filename = os.path.basename(file_path)
     chunks = chunk_text(text)
     embeddings = create_embedding(chunks)
 
     vectors = []
-    for chunk, embedding in zip(chunks, embeddings):
+    for c, e in zip(chunks, embeddings):
         vectors.append(
             {
                 "id": str(uuid4()),
-                "values": embedding,
-                "metadata": {"text": chunk, "filename": filename},
+                "values": e,
+                "metadata": {"text": c, "filename": filename},
             }
         )
 

@@ -8,8 +8,8 @@ def generate_response(query: str, namespace: str):
     result = retrieve(query, namespace)
     contexts = result["contexts"]
     filename = result["filename"]
-
     context_text = "\n\n".join(contexts)
+
     prompt = f"""
     You are analyzing a document called "{filename}".
     Answer the question using the context below.
@@ -17,7 +17,7 @@ def generate_response(query: str, namespace: str):
     {context_text}
     Question:
     {query}
-  """
+    """
 
     response = client.chat.completions.create(
         model=settings.LLM_MODEL,
