@@ -16,7 +16,6 @@ def test_upload_document(mock_ingest):
         )
 
     assert response.status_code == 200
-
     assert response.json() == {"message": "File uploaded"}
 
     mock_ingest.assert_called_once()
