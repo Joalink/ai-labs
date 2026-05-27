@@ -1,5 +1,5 @@
 import { Message } from "@/types/chat";
-import MessageBubble from "./MessageBubble";
+import MessageBubble from "@/components/docs-assistant/MessageBubble";
 
 type Props = {
   messages: Message[];

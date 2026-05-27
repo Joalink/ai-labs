@@ -2,7 +2,7 @@
 
 import MessageList from "@/components/docs-assistant/MessageList";
 import ChatInput from "@/components/docs-assistant/ChatInput";
-import { useDocsChat } from "@/hooks/useDocsChat";
+import { useDocuments } from "@/hooks/useDocuments";
 
 export default function DocsAssistantPage() {
   const {
@@ -16,7 +16,7 @@ export default function DocsAssistantPage() {
     sendMessage,
     clearFile,
     handleFileChange,
-  } = useDocsChat();
+  } = useDocuments();
 
   return (
     <div className="flex flex-col h-[calc(100vh-7.5rem)] max-w-3xl mx-auto">
