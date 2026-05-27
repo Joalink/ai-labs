@@ -31,6 +31,11 @@ export default function Navigation() {
       label: "Docs Assistant",
       icon: <FilesIcon size={24} />,
     },
+    {
+      href: "/ai-tools/meeting-analyze",
+      label: "Meeting Analyzer",
+      icon: <MicrophoneIcon size={24} />,
+    },
   ];
 
   return (
