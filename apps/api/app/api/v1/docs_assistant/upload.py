@@ -12,7 +12,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, UploadFi
 router = APIRouter()
 
 
-@router.post("/upload", status_code=201)
+@router.post("/documents/upload", status_code=201)
 @limiter.limit("5/minute")
 async def upload_document(
     request: Request, file: UploadFile, background_tasks: BackgroundTasks

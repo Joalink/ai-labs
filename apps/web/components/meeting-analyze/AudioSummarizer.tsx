@@ -1,6 +1,11 @@
 import { MeetingResult } from "@/types/meeting";
+import {
+  SmileyIcon,
+  SmileyMehIcon,
+  SmileySadIcon,
+} from "@phosphor-icons/react";
 
-export default function AudioInsights(result: MeetingResult) {
+export default function AudioSummarizer(result: MeetingResult) {
   return (
     <div>
       {result && (
@@ -60,6 +65,22 @@ export default function AudioInsights(result: MeetingResult) {
                 </span>
               ))}
             </div>
+          </div>
+
+          <div className="flex flex-col items-center justify-center mt-6">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+              The general mood during the meeting was{" "}
+              {result.insights.sentiment}
+            </p>
+            {result.insights.sentiment === "positive" && (
+              <SmileyIcon size={60} color="green" />
+            )}
+            {result.insights.sentiment === "neutral" && (
+              <SmileyMehIcon size={60} color="gray" />
+            )}
+            {result.insights.sentiment === "negative" && (
+              <SmileySadIcon size={60} color="orange" />
+            )}
           </div>
         </div>
       )}

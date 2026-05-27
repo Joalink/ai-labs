@@ -15,10 +15,13 @@ export async function POST(req: NextRequest) {
     const backendForm = new FormData();
     backendForm.append("file", file);
 
-    const res = await fetch(`${process.env.BACKEND_URL}/api/v1/upload`, {
-      method: "POST",
-      body: backendForm,
-    });
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/api/v1/documents/upload`,
+      {
+        method: "POST",
+        body: backendForm,
+      },
+    );
 
     if (!res.ok) {
       const error = await res.text();

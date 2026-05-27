@@ -5,12 +5,14 @@ import { FileAudioIcon, UploadSimpleIcon } from "@phosphor-icons/react";
 type Props = {
   file: File | null;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
+  isLoading: boolean;
   onFileChange: (file: File) => Promise<void>;
 };
 
 export default function AudioInput({
   file,
   fileInputRef,
+  isLoading,
   onFileChange,
 }: Props) {
   return (
@@ -46,10 +48,20 @@ export default function AudioInput({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="rounded-lg bg-blue-600 p-4 mb-4 text-white flex items-center gap-2"
+            disabled={isLoading}
+            className="rounded-lg bg-blue-600 p-4 mb-4 text-white flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <UploadSimpleIcon size={24} />
-            {file ? file.name : "Upload Audio"}
+            {isLoading ? (
+              <>
+                <span className="animate-spin">⏳</span>
+                Analyzing...
+              </>
+            ) : (
+              <>
+                <UploadSimpleIcon size={24} />
+                {file ? file.name : "Upload Audio"}
+              </>
+            )}
           </button>
         </div>
       </div>

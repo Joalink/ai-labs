@@ -6,7 +6,7 @@ from fastapi import APIRouter, Request
 router = APIRouter()
 
 
-@router.post("/chat")
+@router.post("/documents/chat")
 @limiter.limit("20/minute")
 async def chat(request: Request, query: str):
     client_ip = get_client_ip(request)

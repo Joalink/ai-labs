@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const { message } = await req.json();
 
-    const url = new URL(`${process.env.BACKEND_URL}/api/v1/chat`);
+    const url = new URL(`${process.env.BACKEND_URL}/api/v1/documents/chat`);
     url.searchParams.set("query", message);
 
     const res = await fetch(url.toString(), {

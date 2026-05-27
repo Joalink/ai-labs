@@ -5,7 +5,7 @@ export async function DELETE(req: NextRequest) {
     const body = await req.json().catch(() => ({}));
     const { namespace } = body;
 
-    const res = await fetch(`${process.env.BACKEND_URL}/api/v1/session`, {
+    const res = await fetch(`${process.env.BACKEND_URL}/api/v1/session/clean`, {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ namespace }),
