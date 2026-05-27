@@ -16,11 +16,21 @@ Upload any document and chat with it using a RAG (Retrieval-Augmented Generation
 - Per-user document isolation via IP namespacing
 - Reload namespace session everytime is used
 
+### 🎙️ Meeting Analysis
+Voice recognition and transcription to analyze and summarize meetings.
+
+- Transcription of audio/video files
+- Summarize the transcript
+- Key decision made
+- Tasks to do
+- Topics discussed
+- Overall sentiment analysis
+
+
 ### 💬 Chat Assistant (coming soon)
 Conversational AI chatbot with context-aware responses.
 
-### 🎙️ Meeting Analysis (coming soon)
-Voice recognition and transcription to analyze and summarize meetings.
+
 
 ---
 
@@ -31,6 +41,7 @@ Voice recognition and transcription to analyze and summarize meetings.
 | Backend | FastAPI, Python 3.11 |
 | Vector Store | Pinecone |
 | LLM | OpenAI |
+| Speech Model | AssemblyAI
 | Dev Environment | Dev Containers |
 | Infra | Railway, Cloudflare |
 
@@ -46,8 +57,9 @@ joalink-labs/
 │   ├── api/                    # FastAPI backend
 │   │   ├── app/
 │   │   │   ├── api/v1/         # Route handlers
-│   │   │   ├── core/           # Config, shared services
-│   │   │   └── services/       # Business logic (RAG pipeline)
+│   │   │   ├── core/           # Config, shared services and utilities
+│   │   │   └── services/       # Business logic
+│   │   ├── tests/              # Test for services functions and endpoints
 │   │   ├── railway.toml
 │   │   └── pyproject.toml
 │   └── web/                    # Next.js frontend
@@ -114,6 +126,7 @@ pnpm dev
 PINECONE_API_KEY=
 PINECONE_INDEX=
 LLM_MODEL=
+ASSEMBLYAI_API_KEY=
 ```
 ### apps/web/.env.local
 ```bash
@@ -127,8 +140,10 @@ BACKEND_URL=http://localhost:8000
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/api/v1/health` | Health check |
-| `POST` | `/api/v1/documents` | Upload and ingest a document |
+| `POST` | `/api/v1/upload` | Upload and ingest a document |
 | `POST` | `/api/v1/chat` | Chat with ingested documents |
+| `DELETE` | `/api/v1/session` | Chat with ingested documents |
+| `POST` | `/api/v1/meeting/analyze` | Transcribe and get insights from audio files |
 
 Interactive API docs available at [http://localhost:8000/docs](http://localhost:8000/docs) when running locally.
 
