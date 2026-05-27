@@ -14,7 +14,7 @@ export function useDocuments() {
 
   const clearSession = useCallback(async () => {
     try {
-      await fetch("/api/docs-assistant/session", {
+      await fetch("/api/session/clean", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ namespace }),
