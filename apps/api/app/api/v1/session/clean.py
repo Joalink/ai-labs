@@ -10,7 +10,7 @@ class SessionDelete(BaseModel):
     namespace: str | None = None
 
 
-@router.delete("/session")
+@router.delete("/session/clean")
 async def clean_session(body: SessionDelete, request: Request):
     try:
         if body.namespace:
