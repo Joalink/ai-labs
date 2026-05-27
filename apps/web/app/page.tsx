@@ -5,11 +5,18 @@ import { ChatIcon, FilesIcon, MicrophoneIcon } from "@phosphor-icons/react";
 
 const tools = [
   {
-    title: "Document Analyzer",
+    title: "Document Assistant",
     desc: "Upload a PDF and extract insights, summaries, and key data.",
     iconBg: "bg-teal-100 dark:bg-teal-900/20",
     href: "/ai-tools/docs-assistant",
     icon: <FilesIcon size={24} color="#1a7e5f" />,
+  },
+  {
+    title: "Meeting Analyzer",
+    desc: "Transcribes audio and extracts sentiment and spoken information.",
+    iconBg: "bg-orange-100 dark:bg-orange-900/20",
+    href: "/ai-tools/meeting-analyze",
+    icon: <MicrophoneIcon size={24} color="#9e4425" />,
   },
 ];
 

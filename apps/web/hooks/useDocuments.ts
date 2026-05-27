@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { Message } from "@/types/chat";
 import { uploadDocument, sendChatMessage } from "@/lib/api";
 
-export function useDocsChat() {
+export function useDocuments() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [file, setFile] = useState<File | null>(null);

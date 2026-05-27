@@ -6,4 +6,4 @@ def create_embedding(chunks: list[str]):
 
     response = client.embeddings.create(model=settings.EMBEDDING_MODEL, input=chunks)
 
-    return [item.embedding for item in response.data]
+    return [i.embedding for i in response.data]

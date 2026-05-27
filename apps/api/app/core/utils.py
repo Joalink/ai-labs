@@ -1,4 +1,7 @@
-from fastapi import Request
+import os
+import re
+
+from fastapi import Request, UploadFile
 
 
 def get_client_ip(request: Request) -> str:
@@ -13,3 +16,22 @@ def get_client_ip(request: Request) -> str:
 
 def make_namespace(ip: str) -> str:
     return f"ip-{ip.replace('.', '-').replace(':', '-')}"
+
+
+def clean_filename(filename: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9._-]", "_", filename)
+
+
+def create_path(input_path: str, file_content: UploadFile) -> str:
+    os.makedirs("data", exist_ok=True)
+    with open(input_path, "wb") as buffer:
+        buffer.write(file_content)
+
+
+def cleanup_paths(*paths):
+    for p in paths:
+        try:
+            if p and os.path.exists(p):
+                os.remove(p)
+        except Exception:
+            pass
