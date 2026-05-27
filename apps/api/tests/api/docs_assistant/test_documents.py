@@ -11,7 +11,8 @@ def test_upload_document(mock_ingest):
 
     with open("tests/files/test.pdf", "rb") as file:
         response = client.post(
-            "/api/v1/documents", files={"file": ("test.pdf", file, "application/pdf")}
+            "/api/v1/documents/upload",
+            files={"file": ("test.pdf", file, "application/pdf")},
         )
 
     assert response.status_code == 200
