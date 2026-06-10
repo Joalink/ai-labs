@@ -38,7 +38,7 @@ Conversational AI chatbot with context-aware responses.
 | Layer | Technology |
 |---|---|
 | Frontend | Next.js 16, Tailwind CSS v4, next-themes |
-| Backend | FastAPI, Python 3.11 |
+| Backend | FastAPI, Python 3.13 |
 | Vector Store | Pinecone |
 | LLM | OpenAI |
 | Speech Model | AssemblyAI
