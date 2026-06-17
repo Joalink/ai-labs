@@ -30,6 +30,7 @@ data/
 # misc
 .DS_Store
 *.pem
+*.log
 
 # debug
 npm-debug.log*
@@ -59,3 +60,12 @@ next-env.d.ts
 .vscode/
 EOF
 .ruff_cache/
+.idea/
+
+
+#alembic
+alembic/versions/__pycache__/
+
+# database
+*.db
+*.sqlite
