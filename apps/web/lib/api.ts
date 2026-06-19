@@ -1,4 +1,5 @@
 import { ApiResponse, UploadResponse } from "@/types/chat";
+import { PredictionResponse } from "@/types/receipt";
 
 const BASE_URL = "/api";
 
@@ -14,7 +15,10 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
 export function uploadDocument(file: File): Promise<UploadResponse> {
   const formData = new FormData();
   formData.append("file", file);
-  return request("docs-assistant/upload", { method: "POST", body: formData });
+  return request("docs-assistant/upload", {
+    method: "POST",
+    body: formData,
+  });
 }
 
 export function sendChatMessage(message: string): Promise<ApiResponse> {
@@ -22,5 +26,14 @@ export function sendChatMessage(message: string): Promise<ApiResponse> {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message }),
+  });
+}
+
+export function uploadReceipt(file: File): Promise<PredictionResponse> {
+  const formData = new FormData();
+  formData.append("file", file);
+  return request("receipt-detection/predict", {
+    method: "POST",
+    body: formData,
   });
 }

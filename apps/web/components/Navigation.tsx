@@ -6,6 +6,7 @@ import {
   ChatIcon,
   FilesIcon,
   MicrophoneIcon,
+  ReceiptIcon,
   SunDimIcon,
   MoonIcon,
   ListIcon,
@@ -35,6 +36,11 @@ export default function Navigation() {
       href: "/ai-tools/meeting-analyze",
       label: "Meeting Analyzer",
       icon: <MicrophoneIcon size={24} />,
+    },
+    {
+      href: "/ai-tools/receipt-detection",
+      label: "Receipt Detection",
+      icon: <ReceiptIcon size={24} />,
     },
   ];
 

@@ -18,12 +18,11 @@ cd /workspace/apps/api
 if [ ! -d ".venv" ]; then
   log "Creating Python venv..."
   uv venv .venv
-  source .venv/bin/activate
-  uv pip install -r requirements.txt
-  ok "Backend installed"
-else
-  ok "Backend already exists (skipped)"
 fi
+  source .venv/bin/activate
+  log "Sycning Python deps..."
+  uv sync
+  ok "Backend installed"
 
 # ── Frontend ────────────────────────────────────────
 cd /workspace/apps/web
@@ -34,17 +33,6 @@ if [ ! -d "node_modules" ]; then
   ok "Frontend installed"
 else
   ok "Frontend already exists (skipped)"
-fi
-
-# ── Root deps (Turborepo) ───────────────────────────
-cd /workspace
-
-if [ ! -d "node_modules" ]; then
-  log "Installing monorepo deps..."
-  pnpm install
-  ok "Monorepo ready"
-else
-  ok "Monorepo already installed"
 fi
 
 # ── .env files ──────────────────────────────────────
