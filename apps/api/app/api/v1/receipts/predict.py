@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.post("/predict", response_model=PredictionResponse)
+@router.post("/receipts/predict", response_model=PredictionResponse)
 async def predict(
     file: UploadFile = File(...),
     confidence: float = 0.5,

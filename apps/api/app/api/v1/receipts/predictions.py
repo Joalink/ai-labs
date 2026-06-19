@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/predictions", response_model=list[ReceiptRecord])
+@router.get("/receipts/predictions", response_model=list[ReceiptRecord])
 def list_predictions(
     limit: int = 10,
     db: Session = Depends(get_db),
