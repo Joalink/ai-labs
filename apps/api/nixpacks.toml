@@ -1,2 +1,2 @@
 [phases.setup]
-nixPkgs = ["python311", "uv", "ffmpeg"]
+nixPkgs = ["python313", "uv", "ffmpeg", "postgresql"]
