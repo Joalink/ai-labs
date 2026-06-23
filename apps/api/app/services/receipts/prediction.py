@@ -3,7 +3,7 @@ from io import BytesIO
 import httpx
 from app.core.config import settings
 from app.models.receipt import Receipt
-from app.repositories.receipt import get_receipt_by_id, get_receipts, save_receipt
+from app.repositories.receipt import get_receipt_by_id, get_receipts
 from app.schemas.receipt import PredictionResponse
 from PIL import Image
 from sqlalchemy.orm import Session
@@ -30,8 +30,6 @@ def process_image(
     )
     response.raise_for_status()
     result = response.json()
-
-    save_receipt(db, filename, result["detections"], confidence)
 
     return PredictionResponse(
         success=True,
