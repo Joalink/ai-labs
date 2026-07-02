@@ -1,4 +1,8 @@
 import { ApiResponse, UploadResponse } from "@/types/chat";
+import {
+  HouseEnergyPredictRequest,
+  HouseEnergyPredictResponse,
+} from "@/types/house-energy";
 import { PredictionResponse } from "@/types/receipt";
 
 const BASE_URL = "/api";
@@ -35,5 +39,15 @@ export function uploadReceipt(file: File): Promise<PredictionResponse> {
   return request("receipt-detection/predict", {
     method: "POST",
     body: formData,
+  });
+}
+
+export function HouseEnergyConsumption(
+  data: HouseEnergyPredictRequest,
+): Promise<HouseEnergyPredictResponse> {
+  return request("house-energy", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   });
 }
