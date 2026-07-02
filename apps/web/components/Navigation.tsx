@@ -11,6 +11,7 @@ import {
   MoonIcon,
   ListIcon,
   XIcon,
+  HouseIcon,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
@@ -41,6 +42,11 @@ export default function Navigation() {
       href: "/ai-tools/receipt-detection",
       label: "Receipt Detection",
       icon: <ReceiptIcon size={24} />,
+    },
+    {
+      href: "/ai-tools/house-energy",
+      label: "House Energy",
+      icon: <HouseIcon size={24} />,
     },
   ];
 

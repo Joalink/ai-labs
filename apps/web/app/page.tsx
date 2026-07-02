@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { ChatIcon, FilesIcon, MicrophoneIcon, ReceiptIcon } from "@phosphor-icons/react";
+import { ChatIcon, FilesIcon, MicrophoneIcon, ReceiptIcon, HouseIcon } from "@phosphor-icons/react";
 
 const tools = [
   {
@@ -21,9 +21,16 @@ const tools = [
   {
     title: "Receipts Detection",
     desc: "Collect the data find on receipts and store on a table.",
-    iconBg: "bg-blue-100 dark:bg-orange-900/20",
+    iconBg: "bg-blue-100 dark:bg-blue-900/20",
     href: "/ai-tools/receipt-detection",
     icon: <ReceiptIcon size={24} color="#256C9E" />,
+  },
+  {
+    title: "House Energy",
+    desc: "Predict energy consumption for your household.",
+    iconBg: "bg-yellow-200 dark:bg-yellow-900/20",
+    href: "/ai-tools/house-energy",
+    icon: <HouseIcon size={24} color="#f5c211" />,
   },
 ];
 
