@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter()
 
 
-@router.post("/energy-consumption/predict", response_model=PredictionResponse)
+@router.post("/house-energy/predict", response_model=PredictionResponse)
 async def predict(predictRequest: PredictRequest) -> PredictionResponse:
     try:
         result = process_energy_consumption(predictRequest)

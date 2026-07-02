@@ -1,7 +1,7 @@
 from app.api.v1.docs_assistant.chat import router as documents_chat_router
 from app.api.v1.docs_assistant.upload import router as documents_upload_router
-from app.api.v1.energy_consumption.predict import router as energy_consumption_router
 from app.api.v1.health import router as health_router
+from app.api.v1.house_energy.predict import router as energy_consumption_router
 from app.api.v1.meeting.analyze import router as meeting_analyze_router
 from app.api.v1.receipts.predict import router as receipts_router
 from app.api.v1.receipts.predictions import router as receipts_predictions_router
