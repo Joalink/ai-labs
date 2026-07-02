@@ -8,7 +8,7 @@ from app.schemas.receipt import PredictionResponse
 from PIL import Image
 from sqlalchemy.orm import Session
 
-DETECTION_API_URL = settings.DETECTION_API_URL
+RECEIPT_DETECTION_API_URL = settings.RECEIPT_DETECTION_API_URL
 
 
 def process_image(
@@ -23,7 +23,7 @@ def process_image(
     buffer.seek(0)
 
     response = httpx.post(
-        f"{DETECTION_API_URL}/predict",
+        f"{RECEIPT_DETECTION_API_URL}/predict",
         files={"file": (filename, buffer, "image/jpeg")},
         params={"confidence": confidence},
         timeout=30,

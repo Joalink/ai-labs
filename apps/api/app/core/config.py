@@ -21,7 +21,8 @@ class Settings(BaseSettings):
 
     ASSEMBLYAI_API_KEY: str
 
-    DETECTION_API_URL: str
+    RECEIPT_DETECTION_API_URL: str
+    ENERGY_CONSUMPTION_API_URL: str
 
     model_config = SettingsConfigDict(env_file=".env")
 
