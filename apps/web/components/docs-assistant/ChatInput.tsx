@@ -8,7 +8,6 @@ type Props = {
   input: string;
   setInput: (val: string) => void;
   file: File | null;
-  setFile: (file: File | null) => void;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   isLoading: boolean;
   onSend: () => void;
@@ -53,11 +52,12 @@ export default function ChatInput({
           onChange={(e) => {
             if (e.target.files?.[0]) onFileChange(e.target.files[0]);
           }}
-          accept=".pdf,.doc,.docx,.txt,.csv"
+          accept="application/pdf,.pdf"
+          disabled={isLoading}
         />
         <label
           htmlFor="file-upload"
-          className="cursor-pointer flex items-center justify-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 w-12 h-12 rounded-lg transition-colors"
+          className="cursor-pointer flex items-center justify-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 w-12 h-12 rounded-lg transition-colors has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50"
           title="Upload Document"
         >
           <PaperclipIcon size={24} />
@@ -68,12 +68,13 @@ export default function ChatInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask a question about your document..."
+          disabled={isLoading}
           className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-4 h-12 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
         />
 
         <button
           type="submit"
-          disabled={isLoading || (!input.trim() && !file)}
+          disabled={isLoading || !input.trim()}
           className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 h-12 rounded-lg font-medium transition-colors"
         >
           <PaperPlaneRightIcon size={24} />

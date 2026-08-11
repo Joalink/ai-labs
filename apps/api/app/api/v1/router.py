@@ -1,5 +1,6 @@
 from app.api.v1.docs_assistant.chat import router as documents_chat_router
 from app.api.v1.docs_assistant.upload import router as documents_upload_router
+from app.api.v1.demo import router as demo_router
 from app.api.v1.health import router as health_router
 from app.api.v1.house_energy.predict import router as energy_consumption_router
 from app.api.v1.meeting.analyze import router as meeting_analyze_router
@@ -12,6 +13,7 @@ api_router = APIRouter(prefix="/api/v1")
 
 
 api_router.include_router(health_router, tags=["health"])
+api_router.include_router(demo_router, tags=["demo"])
 api_router.include_router(documents_chat_router, tags=["documents"])
 api_router.include_router(documents_upload_router, tags=["documents"])
 api_router.include_router(session_clean_router, tags=["session"])

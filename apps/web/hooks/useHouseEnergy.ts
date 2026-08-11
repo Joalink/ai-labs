@@ -25,10 +25,16 @@ export function useHouseEnergy() {
     }
   };
 
+  const resetDemo = () => {
+    setData(null);
+    setError(null);
+  };
+
   return {
     data,
     loading,
     error,
     handlePredict,
+    resetDemo,
   };
 }

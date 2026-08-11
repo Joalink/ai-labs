@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Message } from "@/types/chat";
-import { uploadDocument, sendChatMessage } from "@/lib/api";
+import { getDocumentDemo, uploadDocument, sendChatMessage } from "@/lib/api";
 
 export function useDocuments() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -10,6 +10,7 @@ export function useDocuments() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [namespace, setNamespace] = useState<string | null>(null);
+  const [demoAnswers, setDemoAnswers] = useState<Record<string, string> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const clearSession = useCallback(async () => {
@@ -36,8 +37,40 @@ export function useDocuments() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  const resetDemo = async () => {
+    await clearSession();
+    setMessages([]);
+    setInput("");
+    setNamespace(null);
+    setDemoAnswers(null);
+    clearFile();
+  };
+
+  const loadExample = async () => {
+    setIsLoading(true);
+    try {
+      const demo = await getDocumentDemo();
+      setNamespace("demo");
+      setDemoAnswers(demo.answers);
+      setFile(new File([], demo.file_name, { type: "application/pdf" }));
+      setMessages([
+        { role: "user", text: "", fileName: demo.file_name },
+        {
+          role: "assistant",
+          text: "Example document loaded. Ask about botany or photosynthesis to see a precomputed answer.",
+          fileName: null,
+        },
+      ]);
+    } catch {
+      setMessages([{ role: "assistant", text: "Example data is unavailable. Please try again.", fileName: null }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleFileChange = async (selectedFile: File) => {
     setFile(selectedFile);
+    setDemoAnswers(null);
     setMessages((prev) => [
       ...prev,
       { role: "user", text: "", fileName: selectedFile.name },
@@ -90,7 +123,14 @@ export function useDocuments() {
     setIsLoading(true);
 
     try {
-      const data = await sendChatMessage(input);
+      const normalizedInput = input.trim().toLowerCase();
+      const data = demoAnswers
+        ? {
+            answer:
+              demoAnswers[normalizedInput] ??
+              "This precomputed example covers botany, plant parts and photosynthesis. Try one of those topics.",
+          }
+        : await sendChatMessage(input);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", text: data.answer, fileName: null },
@@ -121,5 +161,7 @@ export function useDocuments() {
     sendMessage,
     handleFileChange,
     clearFile,
+    resetDemo,
+    loadExample,
   };
 }

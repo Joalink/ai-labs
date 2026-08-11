@@ -7,6 +7,7 @@ type Props = {
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   isLoading: boolean;
   onFileChange: (file: File) => Promise<void>;
+  onReset: () => void;
 };
 
 export default function AudioInput({
@@ -14,16 +15,17 @@ export default function AudioInput({
   fileInputRef,
   isLoading,
   onFileChange,
+  onReset,
 }: Props) {
   return (
     <div className="flex-1 overflow-y-auto border rounded-lg p-4 mb-4 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700">
       <div>
         <FileAudioIcon size={48} color="#1a7e5f" className="mx-auto" />
         <p className="text-gray-500 dark:text-gray-400 text-center mt-10">
-          Upload or drag a audio/video here.
+          Upload an audio or video file here.
         </p>
         <p className="text-sm text-gray-400 dark:text-gray-500 text-center">
-          Max 500mb file size.
+          Keep files short for the fastest demo experience.
         </p>
         <p className="text-sm text-gray-400 dark:text-gray-500 text-center">
           Supported formats: mp3, wav, ogg, opus, flac, aac, mp4, m4a, mkv.
@@ -38,7 +40,7 @@ export default function AudioInput({
           <input
             ref={fileInputRef}
             type="file"
-            accept="audio/*"
+            accept="audio/*,video/mp4,video/x-m4v,video/x-matroska"
             className="hidden"
             onChange={(e) => {
               if (e.target.files?.[0]) onFileChange(e.target.files[0]);
@@ -63,6 +65,15 @@ export default function AudioInput({
               </>
             )}
           </button>
+          {file && !isLoading && (
+            <button
+              type="button"
+              onClick={onReset}
+              className="mb-4 ml-2 rounded-lg border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              Reset
+            </button>
+          )}
         </div>
       </div>
     </div>

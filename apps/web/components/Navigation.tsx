@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   HeadCircuitIcon,
   GithubLogoIcon,
-  ChatIcon,
   FilesIcon,
   MicrophoneIcon,
   ReceiptIcon,
@@ -14,18 +13,12 @@ import {
   HouseIcon,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Navigation() {
   const { setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const isDark = resolvedTheme === "dark";
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const navLinks = [
     {
@@ -84,9 +77,7 @@ export default function Navigation() {
                 className="p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
                 aria-label="Toggle theme"
               >
-                {!mounted ? (
-                  <SunDimIcon size={24} weight="fill" className="opacity-0" />
-                ) : isDark ? (
+                {isDark ? (
                   <SunDimIcon size={24} weight="fill" />
                 ) : (
                   <MoonIcon size={24} weight="fill" />
