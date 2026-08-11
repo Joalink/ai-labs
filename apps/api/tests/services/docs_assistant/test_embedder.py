@@ -10,4 +10,4 @@ def test_embedding(mock_create):
 
     result = create_embedding("hello")
 
-    assert result == [0.1, 0.2]
+    assert result == [[0.1, 0.2]]

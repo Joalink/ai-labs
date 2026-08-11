@@ -12,8 +12,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    formData.append("file", file);
-
     const res = await fetch(
       `${process.env.BACKEND_URL}/api/v1/receipts/predict`,
       {

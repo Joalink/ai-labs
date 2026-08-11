@@ -12,25 +12,26 @@ export function useDocuments() {
   const [namespace, setNamespace] = useState<string | null>(null);
   const [demoAnswers, setDemoAnswers] = useState<Record<string, string> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const sessionIdRef = useRef(crypto.randomUUID());
 
   const clearSession = useCallback(async () => {
     try {
-      await fetch("/api/session/clean", {
+      const response = await fetch("/api/session/clean", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ namespace }),
+        body: JSON.stringify({ sessionId: sessionIdRef.current }),
       });
+      if (!response.ok) throw new Error("Session cleanup failed");
     } catch (err) {
       console.error("Session cleanup failed.", err);
     }
-  }, [namespace]);
+  }, []);
 
   useEffect(() => {
-    clearSession();
     return () => {
-      clearSession();
+      void clearSession();
     };
-  }, []);
+  }, [clearSession]);
 
   const clearFile = () => {
     setFile(null);
@@ -43,6 +44,7 @@ export function useDocuments() {
     setInput("");
     setNamespace(null);
     setDemoAnswers(null);
+    sessionIdRef.current = crypto.randomUUID();
     clearFile();
   };
 
@@ -79,7 +81,7 @@ export function useDocuments() {
     setIsLoading(true);
 
     try {
-      const data = await uploadDocument(selectedFile);
+      const data = await uploadDocument(selectedFile, sessionIdRef.current);
       setNamespace(data.namespace);
       setMessages((prev) => [
         ...prev,
@@ -130,7 +132,7 @@ export function useDocuments() {
               demoAnswers[normalizedInput] ??
               "This precomputed example covers botany, plant parts and photosynthesis. Try one of those topics.",
           }
-        : await sendChatMessage(input);
+        : await sendChatMessage(input, sessionIdRef.current);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", text: data.answer, fileName: null },

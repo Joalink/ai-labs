@@ -1,5 +1,4 @@
 export interface HouseEnergyPredictResponse {
-  toFixed(arg0: number): import("react").ReactNode;
   energy_consumption_kwh: number;
 }
 

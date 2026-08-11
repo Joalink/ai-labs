@@ -28,19 +28,26 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   return res.json();
 }
 
-export function uploadDocument(file: File): Promise<UploadResponse> {
+export function uploadDocument(
+  file: File,
+  sessionId: string,
+): Promise<UploadResponse> {
   const formData = new FormData();
   formData.append("file", file);
   return request("docs-assistant/upload", {
     method: "POST",
+    headers: { "X-Session-ID": sessionId },
     body: formData,
   });
 }
 
-export function sendChatMessage(message: string): Promise<ApiResponse> {
+export function sendChatMessage(
+  message: string,
+  sessionId: string,
+): Promise<ApiResponse> {
   return request("docs-assistant/chat", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-Session-ID": sessionId },
     body: JSON.stringify({ message }),
   });
 }
