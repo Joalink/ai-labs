@@ -14,8 +14,6 @@ export async function POST(req: NextRequest) {
     const sessionId = req.headers.get("X-Session-ID");
     if (!sessionId) return NextResponse.json({ message: "Session ID is required" }, { status: 400 });
 
-    formData.append("file", file);
-
     const res = await fetch(
       `${process.env.BACKEND_URL}/api/v1/receipts/predict`,
       {

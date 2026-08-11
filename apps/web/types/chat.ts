@@ -11,6 +11,6 @@ export type ApiResponse = {
 };
 
 export type UploadResponse = {
-  answer: string;
+  message: string;
   namespace: string;
 };

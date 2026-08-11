@@ -1,4 +1,9 @@
-from app.core.utils import clean_filename, cleanup_paths, create_path
+from pathlib import Path
+
+from fastapi import APIRouter, BackgroundTasks, HTTPException, UploadFile
+
+from app.core.utils import cleanup_paths, create_path
+from app.schemas.meeting import MeetingResponse
 from app.services.meeting.audio_processor import (
     extract_audio,
     validate_format,
@@ -6,12 +11,11 @@ from app.services.meeting.audio_processor import (
 )
 from app.services.meeting.extractor import extract_insights
 from app.services.meeting.transcriber import transcribe
-from fastapi import APIRouter, BackgroundTasks, HTTPException, UploadFile
 
 router = APIRouter()
 
 
-@router.post("/meeting/analyze", status_code=200)
+@router.post("/meeting/analyze", status_code=200, response_model=MeetingResponse)
 async def analyze_meeting(file: UploadFile, background_tasks: BackgroundTasks):
 
     if not validate_format(file.filename):
@@ -25,12 +29,12 @@ async def analyze_meeting(file: UploadFile, background_tasks: BackgroundTasks):
     if not validate_size(len(file_content)):
         raise HTTPException(status_code=413, detail="File exceeds 500MB limit")
 
-    safe_filename = clean_filename(file.filename)
-    input_path = f"data/{safe_filename}"
-    audio_path = f"data/audio_{safe_filename}.wav"
+    input_path = ""
+    audio_path = ""
 
     try:
-        create_path(input_path, file_content)
+        input_path = create_path(file.filename, file_content)
+        audio_path = str(Path(input_path).with_suffix(".wav"))
 
         extract_audio(input_path, audio_path)
         transcript = transcribe(audio_path)
@@ -40,6 +44,6 @@ async def analyze_meeting(file: UploadFile, background_tasks: BackgroundTasks):
 
         return {"transcript": transcript, "insights": insights}
 
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         cleanup_paths(input_path, audio_path)
         raise HTTPException(status_code=500, detail=str(e))
