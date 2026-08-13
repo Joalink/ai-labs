@@ -43,7 +43,7 @@ Conversational AI chatbot with context-aware responses.
 | LLM | OpenAI |
 | Speech Model | AssemblyAI
 | Dev Environment | Dev Containers |
-| Infra | Railway, Cloudflare |
+| Infra | Cloudflare |
 
 ---
 
@@ -60,7 +60,6 @@ joalink-labs/
 │   │   │   ├── core/           # Config, shared services and utilities
 │   │   │   └── services/       # Business logic
 │   │   ├── tests/              # Test for services functions and endpoints
-│   │   ├── railway.toml
 │   │   └── pyproject.toml
 │   └── web/                    # Next.js frontend
 │       ├── app/                # App Router pages and API routes
@@ -68,7 +67,6 @@ joalink-labs/
 │       ├── hooks/              # Custom React hooks
 │       ├── lib/                # Fetch utilities
 │       ├── types/              # Shared TypeScript types
-│       ├── railway.toml
 │       └── package.json
 └── README.md
 ```
@@ -148,16 +146,6 @@ BACKEND_URL=http://localhost:8000
 Interactive API docs available at [http://localhost:8000/docs](http://localhost:8000/docs) when running locally.
 
 ---
-
-## Deployment
-
-Both services are deployed on [Railway](ttps://railway.app)  with [Cloudflare](https://cloudflare.com) in front of the frontend.
-
-```
-Browser → Cloudflare → Next.js (Railway) → FastAPI (Railway, private) → Pinecone
-```
-
-See `apps/api/railway.toml` and `apps/web/railway.toml` for deployment configuration.
 
 ## License
 MIT © [JoaLink](https://github.com/JoaLink)
