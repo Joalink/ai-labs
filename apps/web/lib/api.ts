@@ -3,7 +3,10 @@ import {
   HouseEnergyPredictRequest,
   HouseEnergyPredictResponse,
 } from "@/types/house-energy";
-import { PredictionResponse } from "@/types/receipt";
+
+import { DocumentDemo, ReceiptDemo } from "@/types/demo";
+import { MeetingResult } from "@/types/meeting";
+import { PredictionResponse, ReceiptRecord } from "@/types/receipt";
 
 const BASE_URL = "/api";
 
@@ -40,6 +43,22 @@ export function uploadReceipt(file: File): Promise<PredictionResponse> {
     method: "POST",
     body: formData,
   });
+}
+
+export function getDocumentDemo(): Promise<DocumentDemo> {
+  return request("demo/docs");
+}
+
+export function getMeetingDemo(): Promise<MeetingResult> {
+  return request("demo/meeting");
+}
+
+export function getReceiptHistory(): Promise<ReceiptRecord[]> {
+  return request("receipt-detection/predictions");
+}
+
+export function getReceiptDemo(): Promise<ReceiptDemo> {
+  return request("demo/receipt");
 }
 
 export function HouseEnergyConsumption(

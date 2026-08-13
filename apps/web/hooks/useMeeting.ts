@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { MeetingResult } from "@/types/meeting";
+import { getMeetingDemo } from "@/lib/api";
 
 export function useMeeting() {
   const [file, setFile] = useState<File | null>(null);
@@ -43,6 +44,20 @@ export function useMeeting() {
     }
   };
 
+  const loadExample = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const data = await getMeetingDemo();
+      setFile(new File([], "Weekly Meeting Example.mp3", { type: "audio/mpeg" }));
+      setResult(data);
+    } catch {
+      setError("Example data is unavailable. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     file,
     setFile,
@@ -51,6 +66,8 @@ export function useMeeting() {
     result,
     error,
     clearFile,
+    resetDemo: clearFile,
     onFileChange,
+    loadExample,
   };
 }

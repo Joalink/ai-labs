@@ -4,6 +4,12 @@ cat <<EOF > .gitignore
 __pycache__/
 *.pyc
 data/
+!apps/api/data/
+apps/api/data/*
+!apps/api/data/Weekly Meeting Example complete.json
+!apps/api/data/receips/
+apps/api/data/receips/*
+!apps/api/data/receips/receipt_test.jpg
 .python-version
 
 

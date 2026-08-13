@@ -19,11 +19,10 @@
 - Dark/light mode with next-themes
 - BFF proxy routes in Next.js
 - Dev Container configuration
-- Railway deployment for frontend and backend
 - Cloudflare DNS setup
 
 ### Tech Stack
 - Next.js 16, Tailwind CSS v4
 - FastAPI, Python 3.11, uv
 - Pinecone, OpenAI
-- Railway, Cloudflare
+- Cloudflare

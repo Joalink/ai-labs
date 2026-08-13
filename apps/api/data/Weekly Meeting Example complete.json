@@ -1,0 +1,107 @@
+{
+  "transcript": {
+    "text": "Hello, everyone. Thank you guys for coming to our weekly student success meeting. And let's just get started. So I have our list of chronically absent students here. And I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on? I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays. It might be good if we did something like a pancake breakfast to encourage them to come. I think that's a great idea. Let's try that next week. It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing. We should put up posters with tips for not getting sick since it's almost flu season. Like, you know, wash your hands after the bathroom, stuff like that. I think that's a good idea and it'll be a good reminder for the teachers as well. So one other thing I wanted to talk about. There's a student I've noticed here, John Smith. He's missed seven days already and it's only November. Does anyone have an idea what's going on with him? I might be able to fill in the gaps there. I talked to John today and he's really stressed out. He's been dealing with helping his parents take care of his younger siblings during the day. It might actually be a good idea if he spoke to the guidance counselor a little bit. I can talk to John today if you want to send him to my office after you meet with him. It's a lot to deal with for a middle schooler. Great, thanks. And I can help out with the family's childcare needs. I'll look for some free or low cost resources in the community to share with John and he can share them with his family. Great. Well, some really good ideas here today. Thanks for coming. And if no one has anything else, I think we can wrap up.",
+    "speakers": [
+      {
+        "speaker": "A",
+        "text": "Hello, everyone. Thank you guys for coming to our weekly student success meeting. And let's just get started. So I have our list of chronically absent students here. And I've been noticing a troubling trend. A lot of students are skipping on Fridays. Does anyone have any idea what's going on?",
+        "start": 400,
+        "end": 16640
+      },
+      {
+        "speaker": "B",
+        "text": "I've heard some of my mentees talking about how it's really hard to get out of bed on Fridays. It might be good if we did something like a pancake breakfast to encourage them to come. I think that's a great idea. Let's try that next week.",
+        "start": 17200,
+        "end": 28970
+      },
+      {
+        "speaker": "C",
+        "text": "It might also be because a lot of students have been getting sick now that it's getting colder outside. I've had a number of students come by my office with symptoms like sniffling and coughing. We should put up posters with tips for not getting sick since it's almost flu season. Like, you know, wash your hands after the bathroom, stuff like that.",
+        "start": 30090,
+        "end": 44490
+      },
+      {
+        "speaker": "A",
+        "text": "I think that's a good idea and it'll be a good reminder for the teachers as well. So one other thing I wanted to talk about. There's a student I've noticed here, John Smith. He's missed seven days already and it's only November. Does anyone have an idea what's going on with him?",
+        "start": 44730,
+        "end": 59880
+      },
+      {
+        "speaker": "B",
+        "text": "I might be able to fill in the gaps there. I talked to John today and he's really stressed out. He's been dealing with helping his parents take care of his younger siblings during the day. It might actually be a good idea if he spoke to the guidance counselor a little bit.",
+        "start": 60280,
+        "end": 73240
+      },
+      {
+        "speaker": "D",
+        "text": "I can talk to John today if you want to send him to my office after you meet with him. It's a lot to deal with for a middle schooler.",
+        "start": 73560,
+        "end": 80120
+      },
+      {
+        "speaker": "E",
+        "text": "Great, thanks. And I can help out with the family's childcare needs. I'll look for some free or low cost resources in the community to share with John and he can share them with his family.",
+        "start": 80950,
+        "end": 90710
+      },
+      {
+        "speaker": "A",
+        "text": "Great. Well, some really good ideas here today. Thanks for coming. And if no one has anything else, I think we can wrap up.",
+        "start": 91110,
+        "end": 97190
+      }
+    ],
+    "highlights": [
+      "John Smith",
+      "weekly student success meeting",
+      "today",
+      "next week",
+      "good idea",
+      "chronically absent students",
+      "posters",
+      "care",
+      "sniffling",
+      "Fridays",
+      "symptoms",
+      "great idea",
+      "good reminder",
+      "tips",
+      "free or low cost resources"
+    ]
+  },
+  "insights": {
+    "summary": "In the weekly student success meeting, attendees discussed the trend of chronic absenteeism, particularly on Fridays. Ideas were shared to encourage attendance, such as hosting a pancake breakfast and putting up health tips due to flu season. Additionally, concerns were raised about a student, John Smith, who has missed several days and is dealing with family responsibilities. Solutions were proposed to support him through guidance counseling and community resources.",
+    "action_items": [
+      {
+        "owner": "unknown",
+        "task": "organize a pancake breakfast for students",
+        "deadline": "next week"
+      },
+      {
+        "owner": "unknown",
+        "task": "put up health posters with tips on preventing illness",
+        "deadline": "null"
+      },
+      {
+        "owner": "unknown",
+        "task": "talk to John Smith and suggest he meets with the guidance counselor",
+        "deadline": "null"
+      },
+      {
+        "owner": "unknown",
+        "task": "look for free or low-cost childcare resources for John's family",
+        "deadline": "null"
+      }
+    ],
+    "decisions": [
+      "organize a pancake breakfast to encourage attendance",
+      "put up posters with health tips"
+    ],
+    "topics": [
+      "student absenteeism",
+      "student health",
+      "support for individual student needs"
+    ],
+    "sentiment": "positive"
+  }
+}

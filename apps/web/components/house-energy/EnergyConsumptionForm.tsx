@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { HouseEnergyPredictRequest } from "@/types/house-energy";
 
+const EXAMPLE_REQUEST: HouseEnergyPredictRequest = {
+  household_size: 3,
+  avg_temperature_c: 27,
+  has_ac: true,
+  peak_hours_usage_kwh: 4.5,
+  month: 7,
+  day_of_week: 3,
+};
+
 export default function EnergyConsumptionForm({loading, handlePredict}: {loading: boolean, handlePredict: (requestData: HouseEnergyPredictRequest) => void}) {
 
   const [formData, setFormData] = useState<HouseEnergyPredictRequest>({
@@ -28,6 +37,14 @@ export default function EnergyConsumptionForm({loading, handlePredict}: {loading
   return (
     <div className="w-full max-w-md p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Predict Energy Consumption</h2>
+      <button
+        type="button"
+        onClick={() => setFormData(EXAMPLE_REQUEST)}
+        disabled={loading}
+        className="mb-4 text-sm font-medium text-indigo-700 underline underline-offset-4 hover:text-indigo-900 disabled:cursor-not-allowed disabled:opacity-50 dark:text-indigo-300 dark:hover:text-indigo-200"
+      >
+        Load example scenario
+      </button>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
