@@ -7,7 +7,7 @@ import CaseStudyLink from "@/components/CaseStudyLink";
 import { useMeeting } from "@/hooks/useMeeting";
 
 export default function MeetingSummarizePage() {
-  const { file, fileInputRef, isLoading, result, error, onFileChange, resetDemo, loadExample } =
+  const { file, fileInputRef, isLoading, result, error, onFileChange, resetDemo, loadExample, retry } =
     useMeeting();
 
   return (
@@ -52,6 +52,11 @@ export default function MeetingSummarizePage() {
       {error && (
         <div role="alert" className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
           {error}
+          {file && (
+            <button type="button" onClick={retry} className="ml-3 font-medium underline underline-offset-4">
+              Retry
+            </button>
+          )}
         </div>
       )}
 

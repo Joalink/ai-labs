@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class SpeakerUtterance(BaseModel):
@@ -15,17 +17,21 @@ class MeetingTranscript(BaseModel):
 
 
 class ActionItem(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     owner: str
     task: str
     deadline: str | None
 
 
 class MeetingInsights(BaseModel):
-    summary: str
+    model_config = ConfigDict(extra="forbid")
+
+    summary: str = Field(min_length=1)
     action_items: list[ActionItem]
     decisions: list[str]
     topics: list[str]
-    sentiment: str
+    sentiment: Literal["positive", "neutral", "negative"]
 
 
 class MeetingResponse(BaseModel):

@@ -17,6 +17,13 @@ export default function AudioSummarizer(result: MeetingResult) {
             </p>
           </div>
 
+          <details className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+            <summary className="cursor-pointer font-semibold">Transcript</summary>
+            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+              {result.transcript.text}
+            </p>
+          </details>
+
           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
             <h2 className="font-semibold mb-2">Decisions</h2>
             <ul className="space-y-1">

@@ -58,6 +58,10 @@ export function useMeeting() {
     }
   };
 
+  const retry = async () => {
+    if (file) await onFileChange(file);
+  };
+
   return {
     file,
     setFile,
@@ -69,5 +73,6 @@ export function useMeeting() {
     resetDemo: clearFile,
     onFileChange,
     loadExample,
+    retry,
   };
 }
