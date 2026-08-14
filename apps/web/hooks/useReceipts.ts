@@ -24,7 +24,9 @@ export function useReceipts() {
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
   const [historyError, setHistoryError] = useState<string | null>(null);
   const [historyRequestId, setHistoryRequestId] = useState(0);
-  const [analytics, setAnalytics] = useState<MonthlyReceiptAnalytics | null>(null);
+  const [analytics, setAnalytics] = useState<MonthlyReceiptAnalytics | null>(
+    null,
+  );
   const [analyticsError, setAnalyticsError] = useState<string | null>(null);
 
   const loadAnalytics = async (month: string) => {
@@ -32,7 +34,9 @@ export function useReceipts() {
     try {
       setAnalytics(await getMonthlyReceiptAnalytics(month));
     } catch (err) {
-      setAnalyticsError(err instanceof Error ? err.message : "Analytics are unavailable");
+      setAnalyticsError(
+        err instanceof Error ? err.message : "Analytics are unavailable",
+      );
     }
   };
 
