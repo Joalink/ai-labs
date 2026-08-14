@@ -35,11 +35,12 @@ export function uploadDocument(
 export function sendChatMessage(
   message: string,
   sessionId: string,
+  documentNames: string[],
 ): Promise<ApiResponse> {
   return request("docs-assistant/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Session-ID": sessionId },
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({ message, documentNames }),
   });
 }
 

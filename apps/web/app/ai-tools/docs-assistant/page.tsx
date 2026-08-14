@@ -19,6 +19,9 @@ export default function DocsAssistantPage() {
     handleFileChange,
     resetDemo,
     loadExample,
+    documents,
+    selectedDocuments,
+    setSelectedDocuments,
   } = useDocuments();
 
   return (
@@ -60,6 +63,23 @@ export default function DocsAssistantPage() {
         ]}
         note="Use non-sensitive files for this public demo. Resetting the demo clears the current client session."
       />
+      {documents.length > 0 && (
+        <fieldset className="mb-4 rounded-xl border border-zinc-200 p-3 text-sm dark:border-zinc-800">
+          <legend className="px-1 font-medium text-zinc-900 dark:text-zinc-100">Search documents</legend>
+          <div className="flex flex-wrap gap-3">
+            {documents.map((document) => (
+              <label key={document} className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300">
+                <input
+                  type="checkbox"
+                  checked={selectedDocuments.includes(document)}
+                  onChange={(event) => setSelectedDocuments((current) => event.target.checked ? [...current, document] : current.filter((name) => name !== document))}
+                />
+                {document}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
       <MessageList messages={messages} isLoading={isLoading} />
       <ChatInput
         input={input}
