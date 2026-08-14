@@ -9,6 +9,9 @@ export function useHouseEnergy() {
   const [data, setData] = useState<HouseEnergyPredictResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<
+    { input: HouseEnergyPredictRequest; output: HouseEnergyPredictResponse }[]
+  >([]);
 
   const handlePredict = async (requestData: HouseEnergyPredictRequest) => {
     setLoading(true);
@@ -18,6 +21,10 @@ export function useHouseEnergy() {
     try {
       const response = await HouseEnergyConsumption(requestData);
       setData(response);
+      setHistory((current) => [
+        { input: requestData, output: response },
+        ...current,
+      ].slice(0, 10));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Prediction failed");
     } finally {
@@ -28,6 +35,7 @@ export function useHouseEnergy() {
   const resetDemo = () => {
     setData(null);
     setError(null);
+    setHistory([]);
   };
 
   return {
@@ -36,5 +44,6 @@ export function useHouseEnergy() {
     error,
     handlePredict,
     resetDemo,
+    history,
   };
 }
