@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { PredictionResponse, ReceiptRecord } from "@/types/receipt";
-import { getReceiptDemo, getReceiptHistory, uploadReceipt } from "@/lib/api";
+import {
+  MonthlyReceiptAnalytics,
+  PredictionResponse,
+  ReceiptRecord,
+} from "@/types/receipt";
+import {
+  getMonthlyReceiptAnalytics,
+  getReceiptDemo,
+  getReceiptHistory,
+  uploadReceipt,
+} from "@/lib/api";
 
 export function useReceipts() {
   const [file, setFile] = useState<File | null>(null);
@@ -14,6 +23,17 @@ export function useReceipts() {
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
   const [historyError, setHistoryError] = useState<string | null>(null);
   const [historyRequestId, setHistoryRequestId] = useState(0);
+  const [analytics, setAnalytics] = useState<MonthlyReceiptAnalytics | null>(null);
+  const [analyticsError, setAnalyticsError] = useState<string | null>(null);
+
+  const loadAnalytics = async (month: string) => {
+    setAnalyticsError(null);
+    try {
+      setAnalytics(await getMonthlyReceiptAnalytics(month));
+    } catch (err) {
+      setAnalyticsError(err instanceof Error ? err.message : "Analytics are unavailable");
+    }
+  };
 
   const loadHistory = useCallback(() => {
     setIsHistoryLoading(true);
@@ -116,6 +136,9 @@ export function useReceipts() {
     records,
     isHistoryLoading,
     historyError,
+    analytics,
+    analyticsError,
+    loadAnalytics,
     handleReceiptChange,
     loadHistory,
     resetDemo,

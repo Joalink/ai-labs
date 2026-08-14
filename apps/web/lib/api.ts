@@ -6,7 +6,11 @@ import {
 
 import { DocumentDemo, ReceiptDemo } from "@/types/demo";
 import { MeetingResult } from "@/types/meeting";
-import { PredictionResponse, ReceiptRecord } from "@/types/receipt";
+import {
+  MonthlyReceiptAnalytics,
+  PredictionResponse,
+  ReceiptRecord,
+} from "@/types/receipt";
 
 const BASE_URL = "/api";
 
@@ -55,6 +59,12 @@ export function getMeetingDemo(): Promise<MeetingResult> {
 
 export function getReceiptHistory(): Promise<ReceiptRecord[]> {
   return request("receipt-detection/predictions");
+}
+
+export function getMonthlyReceiptAnalytics(
+  month: string,
+): Promise<MonthlyReceiptAnalytics> {
+  return request(`receipt-detection/analytics/monthly?month=${month}`);
 }
 
 export function getReceiptDemo(): Promise<ReceiptDemo> {

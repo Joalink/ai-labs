@@ -26,3 +26,14 @@ export interface ReceiptRecord {
   confidence_threshold: number;
   created_at: string;
 }
+
+export interface MonthlyReceiptAnalytics {
+  month: string;
+  total_spend: number;
+  purchase_count: number;
+  average_receipt: number;
+  category_totals: Record<string, number>;
+  product_totals: Record<string, number>;
+  product_quantities: Record<string, number>;
+  purchase_days: Record<string, number>;
+}
