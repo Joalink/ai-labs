@@ -24,7 +24,28 @@ export default function MessageList({ messages, isLoading }: Props) {
           </ul>
         </div>
       ) : (
-        messages.map((msg, index) => <MessageBubble key={index} msg={msg} />)
+        messages.map((msg, index) => (
+          <div key={index}>
+            <MessageBubble msg={msg} />
+            {msg.role === "assistant" && msg.status === "insufficient_context" && (
+              <p className="mb-3 text-xs text-amber-700 dark:text-amber-300">
+                Try selecting another document or asking a more specific question.
+              </p>
+            )}
+            {msg.sources && msg.sources.length > 0 && (
+              <details className="mb-3 ml-auto max-w-[85%] rounded-lg border border-zinc-200 p-2 text-xs dark:border-zinc-700">
+                <summary className="cursor-pointer font-medium">Sources ({msg.sources.length})</summary>
+                <div className="mt-2 space-y-2 text-zinc-600 dark:text-zinc-300">
+                  {msg.sources.map((source, sourceIndex) => (
+                    <p key={`${source.filename}-${sourceIndex}`}>
+                      <span className="font-medium">{source.filename ?? "Document"}</span>: {source.snippet}
+                    </p>
+                  ))}
+                </div>
+              </details>
+            )}
+          </div>
+        ))
       )}
       {isLoading && (
         <div className="flex justify-start mb-4">

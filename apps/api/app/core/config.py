@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     CHUNK_SIZE: int = 512
     CHUNK_OVERLAP: int = 50
     TOP_K: int = 5
+    RERANK_CANDIDATE_MULTIPLIER: int = 3
     similarity_threshold: float = 0.75
     EMBEDDING_MODEL: str = "text-embedding-3-small"
 

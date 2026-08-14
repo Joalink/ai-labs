@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { message } = await req.json();
+    const { message, documentNames } = await req.json();
     const sessionId = req.headers.get("X-Session-ID");
 
     if (!sessionId) {
@@ -11,6 +11,9 @@ export async function POST(req: NextRequest) {
 
     const url = new URL(`${process.env.BACKEND_URL}/api/v1/documents/chat`);
     url.searchParams.set("query", message);
+    for (const documentName of documentNames ?? []) {
+      url.searchParams.append("document_names", documentName);
+    }
 
     const res = await fetch(url.toString(), {
       method: "POST",

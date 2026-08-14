@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from app.core.shared.pinecone_service import index
 from app.core.utils import make_namespace
 from app.schemas.documents import SessionCleanupResponse
+from app.services.docs_assistant.session_store import clear_session_data
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -30,4 +31,5 @@ async def clean_session(body: SessionDelete):
             status_code=502, detail="Failed to clear document session"
         ) from error
 
+    clear_session_data(namespace)
     return {"message": "Session cleared"}
