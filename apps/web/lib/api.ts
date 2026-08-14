@@ -40,11 +40,12 @@ export function sendChatMessage(message: string): Promise<ApiResponse> {
   });
 }
 
-export function uploadReceipt(file: File): Promise<PredictionResponse> {
+export function uploadReceipt(file: File, sessionId: string): Promise<PredictionResponse> {
   const formData = new FormData();
   formData.append("file", file);
   return request("receipt-detection/predict", {
     method: "POST",
+    headers: { "X-Session-ID": sessionId },
     body: formData,
   });
 }

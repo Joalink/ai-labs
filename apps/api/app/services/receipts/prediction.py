@@ -1,5 +1,7 @@
-from datetime import date
+from datetime import UTC, date, datetime, timedelta
 from io import BytesIO
+from pathlib import Path
+from uuid import uuid4
 
 import httpx
 from PIL import Image
@@ -27,6 +29,7 @@ def process_image(
     filename: str,
     confidence: float,
     db: Session,
+    session_id: str,
 ) -> PredictionResponse:
 
     buffer = BytesIO()
@@ -50,12 +53,19 @@ def process_image(
         total_detections=result["total_detections"],
         detections=result["detections"],
     )
+    image_dir = Path("data/receipt-images") / session_id
+    image_dir.mkdir(parents=True, exist_ok=True)
+    image_path = image_dir / f"{uuid4()}.jpg"
+    image.save(image_path, format="JPEG")
     save_receipt(
         db,
         filename,
         [detection.model_dump() for detection in prediction.detections],
         confidence,
         structured_data,
+        str(image_path),
+        session_id,
+        datetime.now(UTC).replace(tzinfo=None) + timedelta(hours=24),
     )
     return prediction
 

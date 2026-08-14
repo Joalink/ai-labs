@@ -11,6 +11,8 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
+    const sessionId = req.headers.get("X-Session-ID");
+    if (!sessionId) return NextResponse.json({ message: "Session ID is required" }, { status: 400 });
 
     formData.append("file", file);
 
@@ -18,6 +20,7 @@ export async function POST(req: NextRequest) {
       `${process.env.BACKEND_URL}/api/v1/receipts/predict`,
       {
         method: "POST",
+        headers: { "X-Session-ID": sessionId },
         body: formData,
       },
     );

@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest.mock import Mock, patch
 
 from PIL import Image
@@ -16,7 +17,7 @@ def make_session():
 
 
 @patch("app.services.receipts.prediction.httpx.post")
-def test_prediction_persists_provider_structured_data(mock_post):
+def test_prediction_persists_provider_structured_data(mock_post, tmp_path, monkeypatch):
     mock_response = Mock()
     mock_response.json.return_value = {
         "total_detections": 1,
@@ -38,8 +39,11 @@ def test_prediction_persists_provider_structured_data(mock_post):
     }
     mock_post.return_value = mock_response
     session = make_session()
+    monkeypatch.chdir(tmp_path)
 
-    prediction = process_image(Image.new("RGB", (1, 1)), "receipt.jpg", 0.5, session)
+    prediction = process_image(
+        Image.new("RGB", (1, 1)), "receipt.jpg", 0.5, session, "session-test"
+    )
 
     saved_receipt = session.query(Receipt).one()
     assert prediction.total_detections == 1
@@ -55,3 +59,6 @@ def test_prediction_persists_provider_structured_data(mock_post):
         }
     ]
     assert saved_receipt.total == 7.7
+    assert saved_receipt.session_id == "session-test"
+    assert saved_receipt.image_expires_at is not None
+    assert Path(saved_receipt.image_path).is_file()

@@ -23,6 +23,7 @@ export default function ReceiptImage(){
     loadHistory,
     resetDemo,
     loadExample,
+    sessionId,
     analytics,
     analyticsError,
     loadAnalytics,
@@ -81,6 +82,7 @@ export default function ReceiptImage(){
         isLoading={isHistoryLoading}
         error={historyError}
         onRefresh={loadHistory}
+        sessionId={sessionId}
       />
       <MonthlyAnalytics analytics={analytics} error={analyticsError} onMonthChange={loadAnalytics} />
     </div>

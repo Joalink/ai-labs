@@ -12,6 +12,9 @@ def save_receipt(
     detections: list[dict],
     confidence: float,
     structured_data: ReceiptStructuredData | None = None,
+    image_path: str | None = None,
+    session_id: str | None = None,
+    image_expires_at=None,
 ) -> Receipt:
     record = Receipt(
         filename=filename,
@@ -29,6 +32,9 @@ def save_receipt(
         tax=structured_data.tax if structured_data else None,
         total=structured_data.total if structured_data else None,
         currency=structured_data.currency if structured_data else None,
+        image_path=image_path,
+        session_id=session_id,
+        image_expires_at=image_expires_at,
     )
     db.add(record)
     db.commit()
