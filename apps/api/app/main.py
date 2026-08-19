@@ -8,8 +8,8 @@ from slowapi.errors import RateLimitExceeded
 
 app = FastAPI(
     title="JoaLink Labs",
-    description="API for the JoaLink Labs application",
-    version="1.2.0",
+    description="AI Services for Portafolio using advance technics",
+    version="2.0.0",
     docs_url="/docs",
 )
 
