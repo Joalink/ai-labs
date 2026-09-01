@@ -4,13 +4,24 @@ export type Message = {
   role: Role;
   text: string;
   fileName?: string | null;
+  sources?: DocumentSource[];
+  status?: "grounded" | "insufficient_context";
+};
+
+export type DocumentSource = {
+  filename: string | null;
+  snippet: string;
+  vector_score: number | null;
+  rerank_score: number;
 };
 
 export type ApiResponse = {
-  answer: string;
+    answer: string;
+    status: "grounded" | "insufficient_context";
+    sources: DocumentSource[];
 };
 
 export type UploadResponse = {
-  answer: string;
+  message: string;
   namespace: string;
 };

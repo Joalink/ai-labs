@@ -10,27 +10,30 @@ export function useDocuments() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [namespace, setNamespace] = useState<string | null>(null);
+  const [documents, setDocuments] = useState<string[]>([]);
+  const [selectedDocuments, setSelectedDocuments] = useState<string[]>([]);
   const [demoAnswers, setDemoAnswers] = useState<Record<string, string> | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const sessionIdRef = useRef(crypto.randomUUID());
 
   const clearSession = useCallback(async () => {
     try {
-      await fetch("/api/session/clean", {
+      const response = await fetch("/api/session/clean", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ namespace }),
+        body: JSON.stringify({ sessionId: sessionIdRef.current }),
       });
+      if (!response.ok) throw new Error("Session cleanup failed");
     } catch (err) {
       console.error("Session cleanup failed.", err);
     }
-  }, [namespace]);
+  }, []);
 
   useEffect(() => {
-    clearSession();
     return () => {
-      clearSession();
+      void clearSession();
     };
-  }, []);
+  }, [clearSession]);
 
   const clearFile = () => {
     setFile(null);
@@ -42,7 +45,10 @@ export function useDocuments() {
     setMessages([]);
     setInput("");
     setNamespace(null);
+    setDocuments([]);
+    setSelectedDocuments([]);
     setDemoAnswers(null);
+    sessionIdRef.current = crypto.randomUUID();
     clearFile();
   };
 
@@ -51,6 +57,8 @@ export function useDocuments() {
     try {
       const demo = await getDocumentDemo();
       setNamespace("demo");
+      setDocuments([demo.file_name]);
+      setSelectedDocuments([demo.file_name]);
       setDemoAnswers(demo.answers);
       setFile(new File([], demo.file_name, { type: "application/pdf" }));
       setMessages([
@@ -79,8 +87,14 @@ export function useDocuments() {
     setIsLoading(true);
 
     try {
-      const data = await uploadDocument(selectedFile);
+      const data = await uploadDocument(selectedFile, sessionIdRef.current);
       setNamespace(data.namespace);
+      setDocuments((current) =>
+        current.includes(selectedFile.name) ? current : [...current, selectedFile.name],
+      );
+      setSelectedDocuments((current) =>
+        current.includes(selectedFile.name) ? current : [...current, selectedFile.name],
+      );
       setMessages((prev) => [
         ...prev,
         {
@@ -130,10 +144,20 @@ export function useDocuments() {
               demoAnswers[normalizedInput] ??
               "This precomputed example covers botany, plant parts and photosynthesis. Try one of those topics.",
           }
-        : await sendChatMessage(input);
+        : await sendChatMessage(
+            input,
+            sessionIdRef.current,
+            selectedDocuments,
+          );
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", text: data.answer, fileName: null },
+        {
+          role: "assistant",
+          text: data.answer,
+          fileName: null,
+          sources: "sources" in data ? data.sources : [],
+          status: "status" in data ? data.status : "grounded",
+        },
       ]);
     } catch {
       setMessages((prev) => [
@@ -158,6 +182,9 @@ export function useDocuments() {
     fileInputRef,
     isLoading,
     namespace,
+    documents,
+    selectedDocuments,
+    setSelectedDocuments,
     sendMessage,
     handleFileChange,
     clearFile,

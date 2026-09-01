@@ -1,31 +1,23 @@
 import os
 import re
-
-from fastapi import Request, UploadFile
-
-
-def get_client_ip(request: Request) -> str:
-    cloudflare_ip = request.headers.get("CF-Connecting-IP")
-    if cloudflare_ip:
-        return cloudflare_ip
-    forwarded = request.headers.get("X-Forwarded-For")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host
+import tempfile
+from pathlib import Path
+from uuid import UUID
 
 
-def make_namespace(ip: str) -> str:
-    return f"ip-{ip.replace('.', '-').replace(':', '-')}"
+def make_namespace(session_id: str) -> str:
+    return f"session-{UUID(session_id)}"
 
 
 def clean_filename(filename: str) -> str:
     return re.sub(r"[^a-zA-Z0-9._-]", "_", filename)
 
 
-def create_path(input_path: str, file_content: UploadFile) -> str:
-    os.makedirs("data", exist_ok=True)
-    with open(input_path, "wb") as buffer:
-        buffer.write(file_content)
+def create_path(filename: str, file_content: bytes) -> str:
+    directory = Path(tempfile.mkdtemp(prefix="joalink-"))
+    input_path = directory / clean_filename(filename)
+    input_path.write_bytes(file_content)
+    return str(input_path)
 
 
 def cleanup_paths(*paths):
@@ -33,5 +25,6 @@ def cleanup_paths(*paths):
         try:
             if p and os.path.exists(p):
                 os.remove(p)
-        except Exception:
+                Path(p).parent.rmdir()
+        except OSError:
             pass
