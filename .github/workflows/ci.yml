@@ -8,6 +8,15 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: ${{secrets.DATABASE_URL}}
+      PINECODE_API_KEY: ${{secrets.PINECODE_API_KEY}}
+      PINECODE_INDEX_NAME: ${{secrets.PINECODE_INDEX_NAME}}
+      LLM_API_KEY: ${{secrets.LLM_API_KEY}}
+      ASSEMBLYAI_API_KEY: ${{secrets.ASSEMBLYAI_API_KEY}}
+      RECEIPT_DETECTION_API_URL: ${{secrets.RECEIPT_DETECTION_API_URL}}
+      ENERGY_CONSUMPTION_API_URL: ${{secrets.ENERGY_CONSUMPTION_API_URL}}
     defaults:
       run:
         working-directory: apps/api
