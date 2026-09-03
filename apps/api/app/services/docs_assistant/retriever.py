@@ -22,7 +22,10 @@ def rerank_matches(query: str, matches: list[dict]) -> list[dict]:
 
 
 def retrieve(
-    query: str, namespace: str, document_names: list[str] | None = None
+    query: str,
+    namespace: str,
+    document_ids: list[str] | None = None,
+    # document_names: list[str] | None = None
 ) -> dict:
     vector = create_embedding(query)[0]
 
@@ -32,8 +35,12 @@ def retrieve(
         "include_metadata": True,
         "namespace": namespace,
     }
-    if document_names:
-        query_options["filter"] = {"filename": {"$in": document_names}}
+
+    if document_ids:
+        query_options["filter"] = {"document_ids": {"$in": document_ids}}
+
+    # if document_names:
+    #     query_options["filter"] = {"filename": {"$in": document_names}}
 
     results = index.query(**query_options)
     matches = rerank_matches(query, results["matches"])[: settings.TOP_K]
@@ -42,6 +49,7 @@ def retrieve(
         "filename": (matches[0]["metadata"].get("filename") if matches else None),
         "sources": [
             {
+                "document_id": match["metadata"].get("document_id"),
                 "filename": match["metadata"].get("filename"),
                 "text": match["metadata"]["text"],
                 "vector_score": match.get("score"),

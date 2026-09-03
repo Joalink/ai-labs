@@ -9,6 +9,7 @@ export type Message = {
 };
 
 export type DocumentSource = {
+  document_id: string;
   filename: string | null;
   snippet: string;
   vector_score: number | null;
@@ -16,12 +17,19 @@ export type DocumentSource = {
 };
 
 export type ApiResponse = {
-    answer: string;
-    status: "grounded" | "insufficient_context";
-    sources: DocumentSource[];
+  answer: string;
+  status: "grounded" | "insufficient_context";
+  sources: DocumentSource[];
 };
 
 export type UploadResponse = {
   message: string;
   namespace: string;
+  document_id: string;
+  filename: string;
+};
+
+export type Document = {
+  document_id: string;
+  filename: string;
 };

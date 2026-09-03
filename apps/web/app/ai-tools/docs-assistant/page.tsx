@@ -68,13 +68,30 @@ export default function DocsAssistantPage() {
           <legend className="px-1 font-medium text-zinc-900 dark:text-zinc-100">Search documents</legend>
           <div className="flex flex-wrap gap-3">
             {documents.map((document) => (
-              <label key={document} className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300">
-                <input
-                  type="checkbox"
-                  checked={selectedDocuments.includes(document)}
-                  onChange={(event) => setSelectedDocuments((current) => event.target.checked ? [...current, document] : current.filter((name) => name !== document))}
+              <label key={document.document_id} className="flex items-center gap-2 text-zinc-600 dark:text-zinc-300">
+              <input
+                type="checkbox"
+                checked={selectedDocuments.some(
+                  (selected) =>
+                    selected.document_id === document.document_id
+                )}
+                onChange={(event) => {
+                  setSelectedDocuments((current) =>
+                    event.target.checked
+                      ? current.some(
+                          (selected) =>
+                            selected.document_id === document.document_id
+                        )
+                        ? current
+                        : [...current, document]
+                      : current.filter(
+                          (selected) =>
+                            selected.document_id !== document.document_id
+                        )
+                  );
+                }}
                 />
-                {document}
+                {document.filename}
               </label>
             ))}
           </div>

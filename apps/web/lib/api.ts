@@ -39,12 +39,12 @@ export function uploadDocument(
 export function sendChatMessage(
   message: string,
   sessionId: string,
-  documentNames: string[],
+  documentIds: string[],
 ): Promise<ApiResponse> {
   return request("docs-assistant/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Session-ID": sessionId },
-    body: JSON.stringify({ message, documentNames }),
+    body: JSON.stringify({ message, documentIds }),
   });
 }
 
@@ -55,6 +55,16 @@ export function uploadReceipt(file: File, sessionId: string): Promise<Prediction
     method: "POST",
     headers: { "X-Session-ID": sessionId },
     body: formData,
+  });
+}
+
+export function HouseEnergyConsumption(
+  data: HouseEnergyPredictRequest,
+): Promise<HouseEnergyPredictResponse> {
+  return request("house-energy", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   });
 }
 
@@ -78,14 +88,4 @@ export function getMonthlyReceiptAnalytics(
 
 export function getReceiptDemo(): Promise<ReceiptDemo> {
   return request("demo/receipt");
-}
-
-export function HouseEnergyConsumption(
-  data: HouseEnergyPredictRequest,
-): Promise<HouseEnergyPredictResponse> {
-  return request("house-energy", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
 }

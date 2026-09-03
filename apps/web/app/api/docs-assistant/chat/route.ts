@@ -2,17 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, documentNames } = await req.json();
+    const { message, documentIds } = await req.json();
     const sessionId = req.headers.get("X-Session-ID");
 
     if (!sessionId) {
-      return NextResponse.json({ reply: "Session ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { reply: "Session ID is required" },
+        { status: 400 },
+      );
     }
 
     const url = new URL(`${process.env.BACKEND_URL}/api/v1/documents/chat`);
     url.searchParams.set("query", message);
-    for (const documentName of documentNames ?? []) {
-      url.searchParams.append("document_names", documentName);
+    for (const documentId of documentIds ?? []) {
+      url.searchParams.append("document_ids", documentId);
     }
 
     const res = await fetch(url.toString(), {

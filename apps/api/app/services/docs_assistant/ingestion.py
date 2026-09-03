@@ -1,10 +1,11 @@
 import os
 from uuid import uuid4
 
+from pymupdf import Document
+
 from app.core.shared.pinecone_service import index
 from app.services.docs_assistant.chunker import chunk_text
 from app.services.docs_assistant.embedder import create_embedding
-from pymupdf import Document
 
 
 def ingest_pdf(file_path: str, namespace: str):
@@ -16,6 +17,7 @@ def ingest_pdf(file_path: str, namespace: str):
     for p in reader:
         text += p.get_text()
 
+    document_id = str(uuid4())
     filename = os.path.basename(file_path)
     chunks = chunk_text(text)
     embeddings = create_embedding(chunks)
@@ -26,7 +28,11 @@ def ingest_pdf(file_path: str, namespace: str):
             {
                 "id": str(uuid4()),
                 "values": e,
-                "metadata": {"text": c, "filename": filename},
+                "metadata": {
+                    "text": c,
+                    "filename": filename,
+                    "document_id": document_id,
+                },
             }
         )
 
@@ -36,4 +42,9 @@ def ingest_pdf(file_path: str, namespace: str):
         batch = vectors[i : i + BATCH_SIZE]
         index.upsert(vectors=batch, namespace=namespace)
 
-    return {"chunks": len(chunks), "namespace": namespace}
+    return {
+        "chunks": len(chunks),
+        "namespace": namespace,
+        "document_id": document_id,
+        "filename": filename,
+    }

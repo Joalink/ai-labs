@@ -1,12 +1,13 @@
 import { PredictionResponse } from "@/types/receipt";
 
 export type DocumentDemo = {
-  file_name: string;
+  document_id: string;
+  filename: string;
   answers: Record<string, string>;
 };
 
 export type ReceiptDemo = {
-  file_name: string;
+  filename: string;
   image_url: string;
   result: PredictionResponse;
 };

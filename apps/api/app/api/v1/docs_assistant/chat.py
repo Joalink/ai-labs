@@ -13,13 +13,12 @@ router = APIRouter()
 async def chat(
     request: Request,
     query: str,
-    document_names: list[str] | None = Query(default=None),
+    document_ids: list[str] | None = Query(default=None),
     session_id: str = Header(alias="X-Session-ID"),
 ):
     try:
         namespace = make_namespace(session_id)
     except ValueError as error:
         raise HTTPException(status_code=400, detail="Invalid session ID") from error
-    response = generate_response(query, namespace, document_names)
-
+    response = generate_response(query, namespace, document_ids)
     return response
