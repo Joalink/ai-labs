@@ -8,7 +8,11 @@ def test_retrieve_queries_pinecone_with_a_flat_vector(monkeypatch):
     index.query.return_value = {
         "matches": [
             {
-                "metadata": {"text": "RAG retrieves context.", "filename": "guide.pdf"},
+                "metadata": {
+                    "text": "RAG retrieves context.",
+                    "filename": "guide.pdf",
+                    "document_id": "document-id-1",
+                },
                 "score": 0.9,
             }
         ]
@@ -26,11 +30,13 @@ def test_retrieve_queries_pinecone_with_a_flat_vector(monkeypatch):
         include_metadata=True,
         namespace="session-123",
     )
+
     assert result == {
         "contexts": ["RAG retrieves context."],
         "filename": "guide.pdf",
         "sources": [
             {
+                "document_id": "document-id-1",
                 "filename": "guide.pdf",
                 "text": "RAG retrieves context.",
                 "vector_score": 0.9,
@@ -66,8 +72,12 @@ def test_retrieve_filters_to_selected_documents(monkeypatch):
     monkeypatch.setattr(retriever, "create_embedding", lambda _: [[0.1, 0.2]])
     monkeypatch.setattr(retriever, "index", index)
 
-    retriever.retrieve("What is RAG?", "session-123", ["guide.pdf", "notes.pdf"])
+    retriever.retrieve(
+        "What is RAG?",
+        "session-123",
+        ["document-id-1", "document-id-2"],
+    )
 
     assert index.query.call_args.kwargs["filter"] == {
-        "filename": {"$in": ["guide.pdf", "notes.pdf"]}
+        "document_id": {"$in": ["document-id-1", "document-id-2"]}
     }
