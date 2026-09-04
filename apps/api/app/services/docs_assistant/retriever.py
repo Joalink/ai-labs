@@ -25,7 +25,6 @@ def retrieve(
     query: str,
     namespace: str,
     document_ids: list[str] | None = None,
-    # document_names: list[str] | None = None
 ) -> dict:
     vector = create_embedding(query)[0]
 
@@ -37,10 +36,7 @@ def retrieve(
     }
 
     if document_ids:
-        query_options["filter"] = {"document_ids": {"$in": document_ids}}
-
-    # if document_names:
-    #     query_options["filter"] = {"filename": {"$in": document_names}}
+        query_options["filter"] = {"document_id": {"$in": document_ids}}
 
     results = index.query(**query_options)
     matches = rerank_matches(query, results["matches"])[: settings.TOP_K]
