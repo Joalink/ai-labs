@@ -14,6 +14,7 @@ export default function MessageList({ messages, isLoading }: Props) {
           <p className="text-gray-500 dark:text-gray-400">
             Upload a document to get started.
           </p>
+          <p className="text-blue-500">ℹ️ The file max size is 4.5MB</p>
           <p className="text-sm text-gray-400 dark:text-gray-500">
             Then ask things like:
           </p>

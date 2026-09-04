@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Message } from "@/types/chat";
+import { Message, Document } from "@/types/chat";
 import { getDocumentDemo, uploadDocument, sendChatMessage } from "@/lib/api";
 
 export function useDocuments() {
@@ -10,13 +10,19 @@ export function useDocuments() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [namespace, setNamespace] = useState<string | null>(null);
-  const [documents, setDocuments] = useState<string[]>([]);
-  const [selectedDocuments, setSelectedDocuments] = useState<string[]>([]);
-  const [demoAnswers, setDemoAnswers] = useState<Record<string, string> | null>(null);
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [selectedDocuments, setSelectedDocuments] = useState<Document[]>([]);
+  const [demoAnswers, setDemoAnswers] = useState<Record<string, string> | null>(
+    null,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sessionIdRef = useRef(crypto.randomUUID());
 
   const clearSession = useCallback(async () => {
+    if (documents.length === 0) {
+      return;
+    }
+
     try {
       const response = await fetch("/api/session/clean", {
         method: "DELETE",
@@ -57,12 +63,26 @@ export function useDocuments() {
     try {
       const demo = await getDocumentDemo();
       setNamespace("demo");
-      setDocuments([demo.file_name]);
-      setSelectedDocuments([demo.file_name]);
+      const document = {
+        document_id: "demo",
+        filename: demo.filename,
+      };
+
+      setDocuments([document]);
+      setSelectedDocuments([document]);
       setDemoAnswers(demo.answers);
-      setFile(new File([], demo.file_name, { type: "application/pdf" }));
+      setFile(
+        new File([], demo.filename, {
+          type: "application/pdf",
+        }),
+      );
+
       setMessages([
-        { role: "user", text: "", fileName: demo.file_name },
+        {
+          role: "user",
+          text: "",
+          fileName: demo.filename,
+        },
         {
           role: "assistant",
           text: "Example document loaded. Ask about botany or photosynthesis to see a precomputed answer.",
@@ -70,7 +90,13 @@ export function useDocuments() {
         },
       ]);
     } catch {
-      setMessages([{ role: "assistant", text: "Example data is unavailable. Please try again.", fileName: null }]);
+      setMessages([
+        {
+          role: "assistant",
+          text: "Example data is unavailable. Please try again.",
+          fileName: null,
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -88,13 +114,26 @@ export function useDocuments() {
 
     try {
       const data = await uploadDocument(selectedFile, sessionIdRef.current);
+
       setNamespace(data.namespace);
+
+      const document = {
+        document_id: data.document_id,
+        filename: data.filename,
+      };
+
       setDocuments((current) =>
-        current.includes(selectedFile.name) ? current : [...current, selectedFile.name],
+        current.some((doc) => doc.document_id === document.document_id)
+          ? current
+          : [...current, document],
       );
+
       setSelectedDocuments((current) =>
-        current.includes(selectedFile.name) ? current : [...current, selectedFile.name],
+        current.some((doc) => doc.document_id === document.document_id)
+          ? current
+          : [...current, document],
       );
+
       setMessages((prev) => [
         ...prev,
         {
@@ -147,7 +186,7 @@ export function useDocuments() {
         : await sendChatMessage(
             input,
             sessionIdRef.current,
-            selectedDocuments,
+            selectedDocuments.map((doc) => doc.document_id),
           );
       setMessages((prev) => [
         ...prev,

@@ -31,5 +31,5 @@ class ReceiptRecord(BaseModel):
     confidence_threshold: float
     created_at: datetime
 
-    class Config:
+    class ConfigDict:
         from_attributes = True

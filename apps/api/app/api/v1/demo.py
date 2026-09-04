@@ -14,7 +14,7 @@ RECEIPT_IMAGE_PATH = DATA_DIR / "receips" / "receipt_test.jpg"
 @router.get("/demo/docs")
 def get_document_demo() -> dict:
     return {
-        "file_name": "Botany-101.pdf",
+        "filename": "Botany-101.pdf",
         "answers": {
             "what is botany?": (
                 "Botany is the scientific study of plants, including their structure, "
@@ -52,7 +52,7 @@ def get_receipt_demo() -> dict:
         raise HTTPException(status_code=404, detail="Receipt demo data is unavailable")
 
     return {
-        "file_name": RECEIPT_IMAGE_PATH.name,
+        "filename": RECEIPT_IMAGE_PATH.name,
         "image_url": "/api/v1/demo/receipt/image",
         "result": {
             "success": True,

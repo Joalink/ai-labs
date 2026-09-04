@@ -31,7 +31,9 @@ export function useReceipts() {
       .catch((err) => {
         if (isCurrent) {
           setHistoryError(
-            err instanceof Error ? err.message : "Could not load receipt history",
+            err instanceof Error
+              ? err.message
+              : "Could not load receipt history",
           );
         }
       })
@@ -96,11 +98,13 @@ export function useReceipts() {
 
     try {
       const demo = await getReceiptDemo();
-      setFile(new File([], demo.file_name, { type: "image/jpeg" }));
+      setFile(new File([], demo.filename, { type: "image/jpeg" }));
       setPreview(demo.image_url);
       setReceipt(demo.result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Example data is unavailable");
+      setError(
+        err instanceof Error ? err.message : "Example data is unavailable",
+      );
     } finally {
       setLoading(false);
     }

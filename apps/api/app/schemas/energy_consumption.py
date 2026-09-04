@@ -13,5 +13,5 @@ class PredictRequest(BaseModel):
     month: int
     day_of_week: int
 
-    class Config:
+    class ConfigDict:
         from_attributes = True

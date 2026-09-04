@@ -10,13 +10,13 @@ from app.services.docs_assistant.session_store import (
 
 
 def generate_response(
-    query: str, namespace: str, document_names: list[str] | None = None
+    query: str, namespace: str, document_ids: list[str] | None = None
 ) -> dict:
-    cached = get_cached_query(namespace, query, document_names)
+    cached = get_cached_query(namespace, query, document_ids)
     if cached:
         return cached
 
-    result = retrieve(query, namespace, document_names)
+    result = retrieve(query, namespace, document_ids)
     contexts = result["contexts"]
     if not contexts:
         response = {
@@ -24,7 +24,7 @@ def generate_response(
             "status": "insufficient_context",
             "sources": [],
         }
-        cache_query(namespace, query, document_names, response)
+        cache_query(namespace, query, document_ids, response)
         return response
 
     context_text = "\n\n".join(contexts)
@@ -56,6 +56,7 @@ def generate_response(
         "status": "grounded",
         "sources": [
             {
+                "document_id": source["document_id"],
                 "filename": source["filename"],
                 "snippet": source["text"][:280],
                 "vector_score": source["vector_score"],
@@ -65,5 +66,5 @@ def generate_response(
         ],
     }
     add_turn(namespace, query, result["answer"])
-    cache_query(namespace, query, document_names, result)
+    cache_query(namespace, query, document_ids, result)
     return result
