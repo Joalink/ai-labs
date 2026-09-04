@@ -17,7 +17,7 @@ from app.schemas.documents import DocumentUploadResponse
 from app.services.docs_assistant.ingestion import ingest_pdf
 
 router = APIRouter()
-MAX_DOCUMENT_SIZE = 4.5 * 1024 * 1024
+MAX_DOCUMENT_SIZE = int(4.5 * 1024 * 1024)
 
 
 @router.post(

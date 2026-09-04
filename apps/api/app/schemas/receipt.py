@@ -68,5 +68,5 @@ class ReceiptRecord(BaseModel):
     currency: str | None = None
     created_at: datetime
 
-    class Config:
+    class ConfigDict:
         from_attributes = True
