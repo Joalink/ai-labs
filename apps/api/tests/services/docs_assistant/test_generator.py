@@ -19,6 +19,7 @@ def test_generator_returns_sources_and_caches_repeated_query(
         "contexts": ["RAG retrieves relevant document context."],
         "sources": [
             {
+                "document_id": "document-id-1",
                 "filename": "guide.pdf",
                 "text": "RAG retrieves relevant document context.",
                 "vector_score": 0.9,
@@ -28,8 +29,8 @@ def test_generator_returns_sources_and_caches_repeated_query(
     }
     mock_create.return_value = mock_completion("RAG retrieves context.")
 
-    first = generator.generate_response("What is RAG?", namespace, ["guide.pdf"])
-    second = generator.generate_response("What is RAG?", namespace, ["guide.pdf"])
+    first = generator.generate_response("What is RAG?", namespace, ["document-id-1"])
+    second = generator.generate_response("What is RAG?", namespace, ["document-id-1"])
 
     assert first == second
     assert first["sources"][0]["filename"] == "guide.pdf"

@@ -79,5 +79,5 @@ def test_retrieve_filters_to_selected_documents(monkeypatch):
     )
 
     assert index.query.call_args.kwargs["filter"] == {
-        "document_ids": {"$in": ["document-id-1", "document-id-2"]}
+        "document_id": {"$in": ["document-id-1", "document-id-2"]}
     }
