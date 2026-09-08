@@ -8,13 +8,15 @@ Built by an AI Engineer to showcase practical implementations of RAG, chatbots, 
 
 ## 🚀 Projects
 
-### 📄 Docs Assistant
+### 📚 Docs Assistant
 Upload any document and chat with it using a RAG (Retrieval-Augmented Generation) pipeline.
 
 - PDF ingestion and chunking
 - Vector embeddings stored in Pinecone
 - Per-user document isolation via IP namespacing
 - Reload namespace session everytime is used
+- Re-ranking documents
+- Multiple file upload session
 
 ### 🎙️ Meeting Analysis
 Voice recognition and transcription to analyze and summarize meetings.
@@ -26,11 +28,15 @@ Voice recognition and transcription to analyze and summarize meetings.
 - Topics discussed
 - Overall sentiment analysis
 
+### 📄 Invoice data detection
+- Extract invoice image data
+- Store invoices on a database
+- Generate metrics and historical
 
-### 💬 Chat Assistant (coming soon)
-Conversational AI chatbot with context-aware responses.
-
-
+### 🏘️ House energy consumption prediction
+- Energy tracking simulator
+- Model usage to prediction consumption
+- Tips to reduce the enhance the consume of the energy
 
 ---
 
