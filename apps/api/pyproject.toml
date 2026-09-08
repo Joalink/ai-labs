@@ -1,6 +1,6 @@
 [project]
 name = "api"
-version = "2.0.0"
+version = "2.1.1"
 description = "AI Services for Portafolio using advance technics"
 requires-python = ">=3.13"
 dependencies = [
