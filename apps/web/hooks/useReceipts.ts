@@ -19,7 +19,8 @@ export function useReceipts() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const previewUrlRef = useRef<string | null>(null);
-  const sessionIdRef = useRef(crypto.randomUUID());
+  // const sessionIdRef = useRef(crypto.randomUUID());
+  const [sessionId] = useState(() => crypto.randomUUID());
   const [records, setRecords] = useState<ReceiptRecord[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
   const [historyError, setHistoryError] = useState<string | null>(null);
@@ -104,7 +105,8 @@ export function useReceipts() {
     setPreview(nextPreview);
 
     try {
-      const data = await uploadReceipt(selectedFile, sessionIdRef.current);
+      // const data = await uploadReceipt(selectedFile, sessionIdRef.current);
+      const data = await uploadReceipt(selectedFile, sessionId);
       setReceipt(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload receipt failed");
@@ -147,7 +149,7 @@ export function useReceipts() {
     historyError,
     analytics,
     analyticsError,
-    sessionId: sessionIdRef.current,
+    sessionId,
     loadAnalytics,
     handleReceiptChange,
     loadHistory,
