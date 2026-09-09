@@ -6,6 +6,7 @@ import ReceiptsCompare from "@/components/receipt-detection/ReceiptsCompare";
 import ReceiptsTable from "@/components/receipt-detection/ReceiptsTable";
 import DemoGuide from "@/components/DemoGuide";
 import CaseStudyLink from "@/components/CaseStudyLink";
+import MonthlyAnalytics from "@/components/receipt-detection/MonthlyAnalytics";
 
 export default function ReceiptImage(){
   const {
@@ -22,6 +23,10 @@ export default function ReceiptImage(){
     loadHistory,
     resetDemo,
     loadExample,
+    sessionId,
+    analytics,
+    analyticsError,
+    loadAnalytics,
   } = useReceipts();
 
   return(
@@ -77,7 +82,9 @@ export default function ReceiptImage(){
         isLoading={isHistoryLoading}
         error={historyError}
         onRefresh={loadHistory}
+        sessionId={sessionId}
       />
+      <MonthlyAnalytics analytics={analytics} error={analyticsError} onMonthChange={loadAnalytics} />
     </div>
   );
 }

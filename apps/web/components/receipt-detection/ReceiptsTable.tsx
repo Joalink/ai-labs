@@ -7,6 +7,7 @@ type Props = {
   isLoading: boolean;
   error: string | null;
   onRefresh: () => void;
+  sessionId: string;
 };
 
 export default function ReceiptsTable({
@@ -14,6 +15,7 @@ export default function ReceiptsTable({
   isLoading,
   error,
   onRefresh,
+  sessionId,
 }: Props) {
   return (
     <section className="mt-8 rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
@@ -69,7 +71,7 @@ export default function ReceiptsTable({
               {records.map((record) => (
                 <tr key={record.id} className="border-b border-zinc-100 last:border-0 dark:border-zinc-800">
                   <td className="max-w-56 truncate px-3 py-3 font-medium text-zinc-800 dark:text-zinc-100">
-                    {record.filename}
+                    <a className="underline" href={`/api/receipt-detection/${record.id}/image?sessionId=${sessionId}`} target="_blank">{record.filename}</a>
                   </td>
                   <td className="px-3 py-3 text-zinc-600 dark:text-zinc-300">
                     {record.total_detections}
