@@ -3,7 +3,7 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "workspace",
 	"workspaceFolder": "/workspace",
-	"forwardPorts": [3000,8000,5432],
+	"forwardPorts": [3000,8000],
 	"portsAttributes": {
 		"3000": {
 			"label": "Next.js Dev",
@@ -11,6 +11,7 @@
 		}
 	},
 	"postCreateCommand": "bash .devcontainer/scripts/setup.sh",
+	"postStartCommand": "bash .devcontainer/scripts/start-dev.sh",
 	"mounts": ["source=${env:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind" ],
 	"remoteUser": "vscode",
 

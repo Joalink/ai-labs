@@ -44,15 +44,6 @@ log "Checking .env files..."
 
 ok ".env checked"
 
-# ── DB check ────────────────────────────────────────
-log "Checking PostgreSQL..."
-
-until pg_isready -h db -U postgres -d app 2>/dev/null; do
-  sleep 1
-done
-
-ok "Postgres ready"
-
 # ── Migraciones ─────────────
 cd /workspace/apps/api
 
