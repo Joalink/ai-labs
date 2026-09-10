@@ -19,7 +19,6 @@ export function useReceipts() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const previewUrlRef = useRef<string | null>(null);
-  // const sessionIdRef = useRef(crypto.randomUUID());
   const [sessionId] = useState(() => crypto.randomUUID());
   const [records, setRecords] = useState<ReceiptRecord[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
@@ -105,7 +104,6 @@ export function useReceipts() {
     setPreview(nextPreview);
 
     try {
-      // const data = await uploadReceipt(selectedFile, sessionIdRef.current);
       const data = await uploadReceipt(selectedFile, sessionId);
       setReceipt(data);
     } catch (err) {
