@@ -18,12 +18,29 @@ export interface PredictionResponse {
   detections: Detection[];
 }
 
+export interface ReceiptLineItem {
+  description: string | null;
+  quantity: number | null;
+  unit_price: number | null;
+  total_price: number | null;
+  category: string | null;
+  confidence: number | null;
+}
+
 export interface ReceiptRecord {
   id: number;
   filename: string;
   total_detections: number;
   detections: Detection[];
   confidence_threshold: number;
+  merchant: string | null;
+  receipt_date: string | null;
+  line_items: ReceiptLineItem[] | null;
+  subtotal: number | null;
+  tax: number | null;
+  total: number | null;
+  currency: string | null;
+  image_expires_at: string | null;
   created_at: string;
 }
 

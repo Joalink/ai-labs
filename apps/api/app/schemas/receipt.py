@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class BoundingBox(BaseModel):
@@ -66,7 +66,7 @@ class ReceiptRecord(BaseModel):
     tax: float | None = None
     total: float | None = None
     currency: str | None = None
+    image_expires_at: datetime | None = None
     created_at: datetime
 
-    class ConfigDict:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
